@@ -1,0 +1,51 @@
+
+/************************************* 
+*           Sphinx C--               *  
+*                                    *
+*      using @@ labels with c--      *
+*                                    *
+*        By  Emil Halim              * 
+*                                    *
+*************************************/
+
+#pragma option w32c       //create Windows console EXE.
+#pragma option OS         //speed optimization 
+#pragma option w     
+
+#includepath "$\wininc"  
+ 
+#include <windows.h>  
+#include <MSVCRT.H-->
+
+#pragma option lst
+
+int getval(int xx)
+{
+   
+@@: 
+    xx += xx * 2 +1;
+    if(xx<10) $JMP @b; 
+    return xx;
+}
+
+
+main()
+{
+   int k;
+   
+   k = 0;
+   
+   printf("xx is = %d\n",   getval(1) ); 
+   
+@@:
+   k += 2;
+     if(k == 10) goto @f;
+     if(k < 20) goto @b;   
+
+   printf("k is not 20\n"); 
+@@:   
+   printf("k is = %d\n",   k ); 
+   
+   system("pause");
+
+}
