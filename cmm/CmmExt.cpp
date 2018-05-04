@@ -60,3 +60,19 @@ int  DoTokenEvent()
     }
     return ret;
 }
+
+
+void initRegisteredToken()
+{
+	RegisterToken(tk_at, TokenMlable);
+}
+
+void SetCurDir(char* rawfilename)
+{
+	char path[255];
+	strcpy(path, rawfilename);
+	char* ptr = path + strlen(path);
+	while (*ptr != '\\')ptr--;
+	ptr[0] = NULL;
+	SetCurrentDirectory(path);
+}

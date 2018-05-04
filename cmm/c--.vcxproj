@@ -64,10 +64,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\..\..\..\..\..\newSphinxCmm</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>true</LinkIncremental>
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\..\..\..\..\..\newSphinxCmm</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -121,6 +123,7 @@
     <ClCompile Include="tokb.cpp" />
     <ClCompile Include="tokc.cpp" />
     <ClCompile Include="toke.cpp" />
+    <ClCompile Include="TokenExt.cpp" />
     <ClCompile Include="tokr.cpp" />
     <ClCompile Include="util.cpp" />
   </ItemGroup>

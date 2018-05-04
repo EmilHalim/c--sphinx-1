@@ -5,7 +5,10 @@
 
 #include <sys/stat.h>
 
+
 #include "tok.h"
+
+ 
 
 static char** _Argv; //!!! simplest way to make your own variable
 
@@ -250,6 +253,9 @@ int main(int argc, char* argv[])
 			IncludePath((char*)string);
 		}
 
+		sprintf((char*)string, "%s\wininc", AppExePath());
+		IncludePath((char*)string);
+
 		rawfilename = getenv("C--");
 
 		if (rawfilename != NULL)
@@ -305,6 +311,10 @@ int main(int argc, char* argv[])
 		PrintInfo(usage);
 		exit(e_noinputspecified);
 	}
+#ifdef __CONSOLE__
+	SetCurDir(rawfilename); 
+	initRegisteredToken();
+#endif
 
 	time(&systime); //текущее время
 	memcpy(&timeptr, localtime(&systime), sizeof(tm));
@@ -770,7 +780,7 @@ void PrintInfo(char** str)
 #endif
 } */
 
-void strbtrim(char* st)
+char* strbtrim(char* st)
 {
 	int i;
 	char* p, *q;
@@ -791,6 +801,8 @@ void strbtrim(char* st)
 	for (i = strlen(st) - 1; (i >= 0) && isspace(st[i]); i--);
 
 	st[i + 1] = '\0';
+
+	return st;
 }
 
 unsigned long getnumber(unsigned char* buf)
@@ -1668,6 +1680,8 @@ void* MALLOC(unsigned long size)
 	{
 		OutMemory();
 	}
+	
+	memset(mem, 0, size);
 
 	//	if(((unsigned long)mem+size)>maxusedmem)maxusedmem=(unsigned long)mem+size;
 
@@ -1959,7 +1973,7 @@ savecode:
 	return (0);
 }
 
-long CopyFile(FILE* in, FILE* out)
+long  CopyFile(FILE* in, FILE* out)
 {
 	char tbuf[1024];
 	long loads = 0;

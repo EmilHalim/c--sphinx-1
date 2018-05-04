@@ -22,9 +22,9 @@ struct idrec* treestart = NULL;
 struct idrec* definestart = NULL;
 UNDEFOFF* undefoffstart = NULL;
 DLLLIST* listdll = NULL;
-struct structteg* tegtree = NULL;	//Â£Â«Â®Â¡Â Â«Ã¬Â­Ã«Â© Ã¡Ã Â¨Ã¡Â®Âª Ã¢Â¥Â£Â®Â¢
-struct structteg* ltegtree = NULL;	//Â«Â®ÂªÂ Â«Ã¬Â­Ã«Â© Ã¡Ã Â¨Ã¡Â®Âª Ã¢Â¥Â£Â®Â¢
-//struct idrec *lstructlist=NULL;  //Ã¡Â¯Â¨Ã¡Â®Âª Â«Â®ÂªÂ Â«Ã¬Â­Ã«Ã¥ Ã¡Ã¢Ã Ã£ÂªÃ¢Ã£Ã 
+struct structteg* tegtree = NULL;	//£«®¡ «ì­ë© áà¨á®ª â¥£®¢
+struct structteg* ltegtree = NULL;	//«®ª «ì­ë© áà¨á®ª â¥£®¢
+//struct idrec *lstructlist=NULL;  //á¯¨á®ª «®ª «ì­ëå áâàãªâãà
 SINFO strinf = {NULL};
 static int notdef = TRUE;
 static char precha;
@@ -32,10 +32,10 @@ int scanalltoks = TRUE;
 
 
 static volatile idrec** DynamicList = NULL;
-static int sizeDL;	//Ã Â Â§Â¬Â¥Ã  Ã¡Â¯Â¨Ã¡ÂªÂ 
-static volatile int countDP;	//Ã§Â¨Ã¡Â«Â® Â¤Â¨Â­Â Â¬Â¨Ã§Â¥Ã¡ÂªÂ¨Ã¥ Â¯Ã Â®Ã¦Â¥Â¤Ã£Ã  Â¢ Ã¡Â¯Â¨Ã¡ÂªÂ¥
+static int sizeDL;	//à §¬¥à á¯¨áª 
+static volatile int countDP;	//ç¨á«® ¤¨­ ¬¨ç¥áª¨å ¯à®æ¥¤ãà ¢ á¯¨áª¥
 static int findofset = FALSE;
-#define STEPDL 128;	//Ã¨Â Â£ Ã£Â¢Â¥Â«Â¨Ã§Â¥Â­Â¨Ã¯ Ã Â Â§Â¬Â¥Ã Â  Ã¡Â¯Â¨Ã¡ÂªÂ 
+#define STEPDL 128;	//è £ ã¢¥«¨ç¥­¨ï à §¬¥à  á¯¨áª 
 ITOK structadr;
 
 
@@ -60,13 +60,13 @@ char mon[12][4] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
 				  };
 
 unsigned char cha2;
-char skipfind = FALSE;	/* Â¯Ã Â®Â¯Ã£Ã¡Âª Â¯Â®Â¨Ã¡ÂªÂ  Â¢ Â£Â«Â®Â¡Â Â«Ã¬Â­Â®Â¬ Â¤Â¥Ã Â¥Â¢Â¥ Â¨ Ã¡Ã Â¥Â¤Â¨
-															  Â«Â®ÂªÂ Â«Ã¬Â­Ã«Ã¥ Â¯Â¥Ã Â¥Â¬Â¥Â­Â­Ã«Ã¥ */
-static unsigned char savestring3 = FALSE;	//Ã Â Â§Ã Â¥Ã¨Â¨Ã¢Ã¬ Â§Â Â¯Â¨Ã¡Ã¬ Â¢ Â¡Ã£Ã¤Â¥Ã  string3
-static int posstr3;	//Ã£ÂªÂ Â§Â Ã¢Â¥Â«Ã¬ Â¯Â®Â§Â¨Ã¦Â¨Â¨ Â¢ string3
+char skipfind = FALSE;	/* ¯à®¯ãáª ¯®¨áª  ¢ £«®¡ «ì­®¬ ¤¥à¥¢¥ ¨ áà¥¤¨
+															  «®ª «ì­ëå ¯¥à¥¬¥­­ëå */
+static unsigned char savestring3 = FALSE;	//à §à¥è¨âì § ¯¨áì ¢ ¡ãä¥à string3
+static int posstr3;	//ãª § â¥«ì ¯®§¨æ¨¨ ¢ string3
 
 unsigned int inptr2;
-unsigned int linenum2 = 0;	//Â¥Ã¡Â«Â¨ Â­Â¥ Â­Ã£Â«Ã¬, Ã¢Â® Â¨Â¤Â¥Ã¢ Â®Â¡Ã Â Ã¬Â®Ã¢ÂªÂ 
+unsigned int linenum2 = 0;	//¥á«¨ ­¥ ­ã«ì, â® ¨¤¥â ®¡à ì®âª 
 char displaytokerrors;		/* flag to display errors, 0 for tok2 scan */
 char* bufrm = NULL;
 char* startline = NULL;
@@ -78,8 +78,8 @@ unsigned char bytesize = TRUE;
 COM_MOD* cur_mod = NULL;
 
 void docals(struct idrec* ptr);
-void dostructvar2(int* tok4, ITOK* itok4, struct structteg* tteg, unsigned char* string4);	//Ã Â Â§Â¡Â®Ã  Ã¡Ã¢Ã Ã£ÂªÃ¢Ã£Ã  Â­Â  Â¯Â¥Ã Â¥Â¬Â¥Â­Â­Ã«Â¥ Â¨ Ã¡Ã¢Ã Ã£ÂªÃ¢Ã£Ã Ã«
-void dosizeof(ITOK* itok4);	//Â®Â¯Ã  Â§Â­Â Ã§Â¥Â­Â¨Â¥ sizeof
+void dostructvar2(int* tok4, ITOK* itok4, struct structteg* tteg, unsigned char* string4);	//à §¡®à áâàãªâãà ­  ¯¥à¥¬¥­­ë¥ ¨ áâàãªâãàë
+void dosizeof(ITOK* itok4);	//®¯à §­ ç¥­¨¥ sizeof
 void ofsstr(int* tok4, ITOK* itok4);
 int searchlocals(ITOK* itok4, int* tok4, unsigned char* string4);
 unsigned char convert_char();
@@ -381,7 +381,7 @@ int CheckZoom(int size)
 	return zoom;
 }
 
-void calcrm(ITOK* itok4, int ttok) //Â®Â¡Ã Â Â¡Â®Ã¢ÂªÂ  Â¢Ã«Ã Â Â¦Â¥Â­Â¨Ã¯ Â¢ []
+void calcrm(ITOK* itok4, int ttok) //®¡à ¡®âª  ¢ëà ¦¥­¨ï ¢ []
 {
 	int idx, base, razr = 0, zoom, rm = 0;
 	long numrm = 0, cnum, ocnum;
@@ -394,7 +394,7 @@ void calcrm(ITOK* itok4, int ttok) //Â®Â¡Ã Â Â¡Â®Ã¢ÂªÂ  Â¢Ã«Ã Â Â¦Â¥Â­Â¨Ã¯ Â¢ []
 	unsigned int prevtok = tk_number, operand = tk_plus;
 	int dsword, dsword2;
 	nextchar();
-	whitespace();//Â¯Ã Â®Â¯Ã£Ã¡Âª Â­Â¥Â§Â­Â Ã§Â Ã©Â¨Ã¥ Ã¡Â¨Â¬Â¢Â®Â«Â®Â¢
+	whitespace();//¯à®¯ãáª ­¥§­ ç é¨å á¨¬¢®«®¢
 
 	if (!displaytokerrors)
 	{
@@ -462,7 +462,7 @@ void calcrm(ITOK* itok4, int ttok) //Â®Â¡Ã Â Â¡Â®Ã¢ÂªÂ  Â¢Ã«Ã Â Â¦Â¥Â­Â¨Ã¯ Â¢ []
 	if (cha == '&')
 	{
 		nextchar();
-		whitespace();//Â¯Ã Â®Â¯Ã£Ã¡Âª Â­Â¥Â§Â­Â Ã§Â Ã©Â¨Ã¥ Ã¡Â¨Â¬Â¢Â®Â«Â®Â¢
+		whitespace();//¯à®¯ãáª ­¥§­ ç é¨å á¨¬¢®«®¢
 		sizevar = 1;
 		zoom = 0;
 	}
@@ -477,7 +477,7 @@ void calcrm(ITOK* itok4, int ttok) //Â®Â¡Ã Â Â¡Â®Ã¢ÂªÂ  Â¢Ã«Ã Â Â¦Â¥Â­Â¨Ã¯ Â¢ []
 		}
 
 		tokscan(&ctok, &cstok, pstring);
-		whitespace();//Â¯Ã Â®Â¯Ã£Ã¡Âª Â­Â¥Â§Â­Â Ã§Â Ã©Â¨Ã¥ Ã¡Â¨Â¬Â¢Â®Â«Â®Â¢
+		whitespace();//¯à®¯ãáª ­¥§­ ç é¨å á¨¬¢®«®¢
 
 		if (dsword == 1)
 		{
@@ -620,7 +620,7 @@ loopsw:
 
 enumb:
 			flag ^= cstok.flag;
-			whitespace();//Â¯Ã Â®Â¯Ã£Ã¡Âª Â­Â¥Â§Â­Â Ã§Â Ã©Â¨Ã¥ Ã¡Â¨Â¬Â¢Â®Â«Â®Â¢
+			whitespace();//¯à®¯ãáª ­¥§­ ç é¨å á¨¬¢®«®¢
 			ocnum = cnum;
 			numrm += cnum;
 
@@ -703,7 +703,7 @@ enumb:
 				goto runblock;
 			}
 
-			if ((cstok.post & USED_DIN_VAR) == USED_DIN_VAR) 	//Â¤Â¨Â­Â Â¬Â¨Ã§Â¥Ã¡ÂªÂ Ã¯ Â¯Â¥Ã Â¥Â¬Â¥Â­Â­Â Ã¯
+			if ((cstok.post & USED_DIN_VAR) == USED_DIN_VAR) 	//¤¨­ ¬¨ç¥áª ï ¯¥à¥¬¥­­ ï
 			{
 				if (dstok.rec != NULL)
 				{
@@ -973,7 +973,7 @@ con1:
 		if (nextscan)
 		{
 			tokscan(&ctok, &cstok, pstring);
-			whitespace();//Â¯Ã Â®Â¯Ã£Ã¡Âª Â­Â¥Â§Â­Â Ã§Â Ã©Â¨Ã¥ Ã¡Â¨Â¬Â¢Â®Â«Â®Â¢
+			whitespace();//¯à®¯ãáª ­¥§­ ç é¨å á¨¬¢®«®¢
 		}
 
 		while (ctok == tk_minus)
@@ -983,7 +983,7 @@ con1:
 				goto runblock;
 			}
 
-			whitespace();//Â¯Ã Â®Â¯Ã£Ã¡Âª Â­Â¥Â§Â­Â Ã§Â Ã©Â¨Ã¥ Ã¡Â¨Â¬Â¢Â®Â«Â®Â¢
+			whitespace();//¯à®¯ãáª ­¥§­ ç é¨å á¨¬¢®«®¢
 			numrm += cnum;
 			flag ^= cstok.flag;
 
@@ -1100,7 +1100,7 @@ con1:
 
 		if (base != -1 || rm != 0)
 		{
-			cstok.rm |= rm_mod10;    //ÂªÂ®Ã Â¥ÂªÃ¦Â¨Ã¯ MOD Â¡Ã£Â¤Â¥Ã¢ Â¯Â®Â§Â¤Â­Â¥Â¥, Â  Ã¡Â¥Â©Ã§Â Ã¡ Â¬Â ÂªÃ¡Â¨Â¬Ã£Â¬
+			cstok.rm |= rm_mod10;    //ª®à¥ªæ¨ï MOD ¡ã¤¥â ¯®§¤­¥¥,   á¥©ç á ¬ ªá¨¬ã¬
 		}
 	}
 
@@ -1707,7 +1707,7 @@ int CheckMassiv(char*& buf, int sizeel, int treg, int* idx, int* base, long* num
 	ofsst = BackString(buf);
 	free(buf);
 	buf = NULL;
-	oldinput = input;	//Ã¡Â®Ã¥Ã  Â­Â¥ÂªÂ®Ã¢Â®Ã  Â¯Â¥Ã Â¥Â¬Â¥Â­Ã«Â¥
+	oldinput = input;	//á®åà ­¥ª®â®à ¯¥à¥¬¥­ë¥
 	oldinptr = inptr2;
 	bcha = cha2;
 	oldendinptr = endinptr;
@@ -1869,7 +1869,7 @@ int CheckMassiv(char*& buf, int sizeel, int treg, int* idx, int* base, long* num
 
 		if ((chip == 7 || chip == 8) && am32 == FALSE && ((sizeel > 1 && sizeel < 6) || sizeel == 8 || sizeel == 9))
 		{
-			//Â¨Â§Â¡Â¥Â¦Â Ã¢Ã¬ Â®Â¡Ã Â Ã©Â¥Â­Â¨Â¥ Âª Ã§Â Ã¡Ã¢Â­Â®Â¬Ã£ Ã Â¥Â£Â¨Ã¡Ã¢Ã Ã£
+			//¨§¡¥¦ âì ®¡à é¥­¨¥ ª ç áâ­®¬ã à¥£¨áâàã
 			op(0x31);
 			op(0xC0 + treg * 9);
 		}
@@ -2052,13 +2052,13 @@ void nexttok2()
 	linenumber = linenum2;
 	cha = cha2;
 	displaytokerrors = 1;
-	tokscan(&tok, &itok, string); //Ã Â Â§Â¡Â®Ã  ÂªÂ®Â¬Â Â­Â¤Ã«
+	tokscan(&tok, &itok, string); //à §¡®à ª®¬ ­¤ë
 
 	//	printf("input=%08X inptr=%08X tok=%d %s\n",input,inptr,tok,itok.name);
 	if (tok == tk_dblcolon && numblocks)
 	{
 		skiplocals = TRUE;
-		tokscan(&tok, &itok, string); //Ã Â Â§Â¡Â®Ã  ÂªÂ®Â¬Â Â­Â¤Ã«
+		tokscan(&tok, &itok, string); //à §¡®à ª®¬ ­¤ë
 	}
 
 	ScanTok2();
@@ -2268,7 +2268,7 @@ void nexttok()
 	DoTokenEvent();
 }
 
-void whitespace() //Â¯Ã Â®Â¯Ã£Ã¡Âª Â­Â§Â­Â Ã§Â Ã©Â¨Ã¥ Ã¡Â¨Â¬Â¢Â®Â«Â®Â¢
+void whitespace() //¯à®¯ãáª ­§­ ç é¨å á¨¬¢®«®¢
 {
 	while (isspace(cha) || cha == 255 || cha == 0)
 	{
@@ -2333,7 +2333,7 @@ unsigned char convert_char()
 	case 'n':
 		return (13);
 
-	//		case 'p': return('Âœ');
+	//		case 'p': return('œ');
 	case 'r':
 		return (13);
 
@@ -2542,7 +2542,7 @@ void GetTokString(int* tok4, ITOK* itok4, unsigned char* string4, int useunicode
 	}
 
 nextstr:
-	nextchar();	//Ã¡Ã¢Ã Â®ÂªÂ®Â¢Â Ã¯ ÂªÂ®Â­Ã¡Ã¢Â Â­Ã¢Â 
+	nextchar();	//áâà®ª®¢ ï ª®­áâ ­â 
 
 	while (cha != '\"' && !endoffile && strptr < STRLEN - 1)
 	{
@@ -2570,7 +2570,7 @@ nextstr:
 	string4[strptr] = 0;
 	*tok4 = tk_string;
 	//	itok4->number=strptr;
-	itok4->rm = 1;	//Â¥Ã¡Ã¢Ã¬ Â®Ã Â¨Â£Â¨Â­Â Â« Ã¡Ã¢Ã Â®ÂªÂ¨
+	itok4->rm = 1;	//¥áâì ®à¨£¨­ « áâà®ª¨
 
 	if (cha != '\"')
 	{
@@ -2616,7 +2616,7 @@ nextstr:
 #endif
 
 	//	10.08.04 22:20
-	whitespace(); //Â¯Ã Â®Â¯Ã£Ã¡Âª Â­Â¥Â§Â­Â Ã§Â Ã©Â¨Ã¥ Ã¡Â¨Â¬Â¢Â®Â«Â®Â¢
+	whitespace(); //¯à®¯ãáª ­¥§­ ç é¨å á¨¬¢®«®¢
 
 	if (cha == '\"')
 	{
@@ -2654,12 +2654,12 @@ nextstr:
 }
 
 void tokscan(int* tok4, ITOK* itok4, unsigned char* string4)
-// Â¯Â®Â¨Ã¡Âª Â¨Â¤Â¥Â­Ã¢Â¨Ã¤Â¨ÂªÂ Ã¢Â®Ã Â®Â¢, Â¤Â¨Ã Â¥ÂªÃ¢Â¨Â¢ ...
+// ¯®¨áª ¨¤¥­â¨ä¨ª â®à®¢, ¤¨à¥ªâ¨¢ ...
 {
 	int useme;
 	unsigned int strptr = 0;
 	char uppercase = 1, next = 1;
-	//Ã£Ã¡Ã¢Â Â­Â®Â¢ÂªÂ¨ Â¯Â® Ã£Â¬Â®Â«Ã§Â Â­Â¨Ã®
+	//ãáâ ­®¢ª¨ ¯® ã¬®«ç ­¨î
 #ifdef DEBUGMODE
 
 	if (debug)
@@ -2689,10 +2689,10 @@ void tokscan(int* tok4, ITOK* itok4, unsigned char* string4)
 	itok4->type = tp_ucnovn;
 	itok4->npointr = 0;
 	itok4->name[0] = 0;
-	whitespace(); //Â¯Ã Â®Â¯Ã£Ã¡Âª Â­Â¥Â§Â­Â Ã§Â Ã©Â¨Ã¥ Ã¡Â¨Â¬Â¢Â®Â«Â®Â¢
+	whitespace(); //¯à®¯ãáª ­¥§­ ç é¨å á¨¬¢®«®¢
 
 	//	if(displaytokerrors)printf("%c ",cha);
-	if (isalpha(cha) || (cha == '_') || (cha >= 0x80)) 	//Â¨Â¤Â¥Â­Ã¢Â¨Ã¤Â¨ÂªÂ Ã¢Â®Ã 
+	if (isalpha(cha) || (cha == '_') || (cha >= 0x80)) 	//¨¤¥­â¨ä¨ª â®à
 	{
 		do
 		{
@@ -2707,7 +2707,7 @@ void tokscan(int* tok4, ITOK* itok4, unsigned char* string4)
 		}
 		while ((strptr < IDLENGTH) && (CheckChar2() == TRUE));
 
-		if (strptr >= IDLENGTH) //Â¤Â«Â¨Â­Â  Â¡Â®Â«Ã¬Ã¨Â¥ 32
+		if (strptr >= IDLENGTH) //¤«¨­  ¡®«ìè¥ 32
 		{
 			if (displaytokerrors)
 			{
@@ -2716,10 +2716,10 @@ void tokscan(int* tok4, ITOK* itok4, unsigned char* string4)
 
 			while (CheckChar2() == TRUE)
 			{
-				nextchar();    //Â¤Â®Ã§Â¨Ã¢Â Ã¢Ã¬ Ã¡Â«Â®Â¢Â®
+				nextchar();    //¤®ç¨â âì á«®¢®
 			}
 
-			strptr = IDLENGTH - 1;	//Â®Â¡Ã Â¥Â§Â Ã¢Ã¬ Â¤Â® 32
+			strptr = IDLENGTH - 1;	//®¡à¥§ âì ¤® 32
 		}
 
 		if (cha == '~' && strptr < IDLENGTH - 1)
@@ -2791,7 +2791,7 @@ void tokscan(int* tok4, ITOK* itok4, unsigned char* string4)
 			return;
 		}
 
-		if (uppercase) 	//Â¢Â¥Ã Ã¥Â­Â¨Â© Ã Â¥Â£Â¨Ã¡Ã¢Ã 
+		if (uppercase) 	//¢¥àå­¨© à¥£¨áâà
 		{
 			if (strptr == 1 && string4[0] == 'L' && cha == '"')
 			{
@@ -2804,7 +2804,7 @@ void tokscan(int* tok4, ITOK* itok4, unsigned char* string4)
 
 			if (string4[1] == 'S' && strptr >= 5 && strptr <= 8)
 			{
-				for (useme = 0; useme < ID2S; useme++) 	//Â¯Ã Â®Â¢Â¥Ã ÂªÂ  Â­Â  ESBYTE ...
+				for (useme = 0; useme < ID2S; useme++) 	//¯à®¢¥àª  ­  ESBYTE ...
 				{
 					if (strcmp((char*)string4, id2[useme]) == 0)
 					{
@@ -2822,7 +2822,7 @@ void tokscan(int* tok4, ITOK* itok4, unsigned char* string4)
 			*tok4 = tk_id;
 		}
 
-		if (strptr == 2) 	//Â¤Â«Â¨Â­Â  2 Ã¡Â¨Â¬Â¢Â®Â«Â  check for AX, CX, DX, ...
+		if (strptr == 2) 	//¤«¨­  2 á¨¬¢®«  check for AX, CX, DX, ...
 		{
 			if ((string4[0] & 0x5f) == 'S' && (string4[1] & 0x5f) == 'T')
 			{
@@ -3096,9 +3096,9 @@ extreg32:
 				}
 			}
 
-			if (searchlocals(itok4, tok4, string4) == FALSE) //Â¯Â®Â¨Ã¡Âª Ã¡Ã Â¥Â¤Â¨ Â«Â®ÂªÂ Â«Ã¬Â­Ã«Ã¥ Â¬Â¥Ã¢Â®Âª
+			if (searchlocals(itok4, tok4, string4) == FALSE) //¯®¨áª áà¥¤¨ «®ª «ì­ëå ¬¥â®ª
 			{
-				//Â¥Ã¡Â«Â¨ Â­Â¨Ã§Â¥Â£Â® Â­Â¥ Â­Â Â©Â¤Â¥Â­Â® Â¯Â®Â¨Ã¡Âª Â¢ Â¤Â¥Ã Â¥Â¢Â¥ Â¯Â¥Ã Â¥Â¬Â¥Â­Ã«Ã¥
+				//¥á«¨ ­¨ç¥£® ­¥ ­ ©¤¥­® ¯®¨áª ¢ ¤¥à¥¢¥ ¯¥à¥¬¥­ëå
 				searchtree(itok4, tok4, string4);
 
 				if (*tok4 == tk_endline)
@@ -3141,9 +3141,9 @@ extreg32:
 						}
 					}
 
-					if (itok4->post == DYNAMIC_POST) 	//Â¯Ã Â¥Â®Â¡Ã Â Â§Â®Â¢Â Ã¢Ã¬ Â¤Â¨Â­Â Â¬Â¨Ã§Â¥Ã¡ÂªÃ£Ã® Â«Â®ÂªÂ Â«Ã¬Â­Ã£Ã® Â¢ Â«Â®ÂªÂ Â«Ã¬Â­Ã£Ã®
+					if (itok4->post == DYNAMIC_POST) 	//¯à¥®¡à §®¢ âì ¤¨­ ¬¨ç¥áªãî «®ª «ì­ãî ¢ «®ª «ì­ãî
 					{
-						if (alignword && *tok4 != tk_charvar && *tok4 != tk_bytevar) 	//Â¢Ã«Ã Â®Â¢Â­Ã¯Ã¢Ã¬ Â­Â  Ã§Â¥Ã¢Â­Ã«Â© Â Â¤Ã Â¥Ã¡
+						if (alignword && *tok4 != tk_charvar && *tok4 != tk_bytevar) 	//¢ëà®¢­ïâì ­  ç¥â­ë©  ¤à¥á
 						{
 							switch (*tok4)
 							{
@@ -3327,11 +3327,11 @@ yesid:
 
 		if ((*tok4 >= tk_bits && *tok4 <= tk_doublevar) || *tok4 == tk_pointer)
 		{
-			whitespace();//Â¯Ã Â®Â¯Ã£Ã¡Âª Â­Â¥Â§Â­Â Ã§Â Ã©Â¨Ã¥ Ã¡Â¨Â¬Â¢Â®Â«Â®Â¢
+			whitespace();//¯à®¯ãáª ­¥§­ ç é¨å á¨¬¢®«®¢
 
 			if (cha == '[')
 			{
-				calcrm(itok4, *tok4);    //Â®Â¡Ã Â Â¡Â®Ã¢ÂªÂ  Â¢Ã«Ã Â Â¦Â¥Â­Â¨Ã¯ Â¢ []
+				calcrm(itok4, *tok4);    //®¡à ¡®âª  ¢ëà ¦¥­¨ï ¢ []
 			}
 		}
 
@@ -3344,7 +3344,7 @@ yesid:
 
 		next = 0;
 	}
-	else if (isdigit(cha)) //Ã§Â¨Ã¡Â«Â 
+	else if (isdigit(cha)) //ç¨á« 
 	{
 		inptr--;
 		itok4->lnumber = scannumber(&itok4->rm);
@@ -3358,7 +3358,7 @@ yesid:
 			next = 0;
 			break;
 
-		case '\'': //Ã¡Â¨Â¬Â¢Â®Â«Ã¬Â­Â Ã¯ ÂªÂ®Â­Ã¡Ã¢Â Â­Ã¢Â  Â¬Â®Â¦Â¥Ã¢ Â¨Â¬Â¥Ã¢Ã¬ Â¡Â®Â«Â¥Â¥ 1 Ã¡Â¨Â¬Â¢Â®Â«Â 
+		case '\'': //á¨¬¢®«ì­ ï ª®­áâ ­â  ¬®¦¥â ¨¬¥âì ¡®«¥¥ 1 á¨¬¢®« 
 			nextchar();
 			next = 0;
 
@@ -3399,17 +3399,17 @@ yesid:
 			{
 			case '=':
 				*tok4 = tk_minusequals;
-				break;	//Â¬Â¨Â­Ã£Ã¡ Ã Â Â¢Â­Â®
+				break;	//¬¨­ãá à ¢­®
 
 			case '-':
 				*tok4 = tk_minusminus;
-				break; 	//Â¬Â¨Â­Ã£Ã¡-Â¬Â¨Â­Ã£Ã¡
+				break; 	//¬¨­ãá-¬¨­ãá
 
 			default:
 				*tok4 = tk_minus;
 				next = 0;
 				itok4->type = tp_opperand;
-				break;//Â¬Â¨Â­Ã£Ã¡
+				break;//¬¨­ãá
 			}
 
 			break;
@@ -3421,11 +3421,11 @@ yesid:
 			{
 			case '=':
 				*tok4 = tk_plusequals;
-				break; //Â¯Â«Ã®Ã¡ Ã Â Â¢Â­Â®
+				break; //¯«îá à ¢­®
 
 			case '+':
 				*tok4 = tk_plusplus;
-				break; 	//Â¯Â«Ã®Ã¡-Â¯Â«Ã®Ã¡
+				break; 	//¯«îá-¯«îá
 
 			default:
 				whitespace();	// spaces allowed between
@@ -3436,7 +3436,7 @@ yesid:
 				}
 				else
 				{
-					*tok4 = tk_plus; 				 //Â¯Â«Ã®Ã¡
+					*tok4 = tk_plus; 				 //¯«îá
 					next = 0;
 				}
 
@@ -3457,10 +3457,10 @@ yesid:
 
 			case '-':
 				*tok4 = tk_multminus;
-				break;			 //Ã£Â¬Â­Â®Â¦Â¨Ã¢Ã¬ Â¬Â¨Â­Ã£Ã¡
+				break;			 //ã¬­®¦¨âì ¬¨­ãá
 
 			default:
-				*tok4 = tk_mult; 									 //Ã£Â¬Â­Â®Â¦Â¨Ã¢Ã¬
+				*tok4 = tk_mult; 									 //ã¬­®¦¨âì
 				next = 0;
 			}
 
@@ -3473,7 +3473,7 @@ yesid:
 			switch (cha)
 			{
 			case '*':
-				nextchar(); //Ã¡Â®Â¬Â¥Â­Ã¢Â Ã Â¨Â©
+				nextchar(); //á®¬¥­â à¨©
 				useme = 1;
 
 				while (!endoffile && useme > 0)
@@ -3543,7 +3543,7 @@ yesid:
 				{
 					nextchar();
 				}
-				while (!endoffile && cha != 13);	//Ã¡Ã¢Ã Â®ÂªÂ  ÂªÂ®Â¬Â¥Â­Ã¢Â Ã Â¨Ã¯
+				while (!endoffile && cha != 13);	//áâà®ª  ª®¬¥­â à¨ï
 
 				if (endoffile)
 				{
@@ -3580,7 +3580,7 @@ yesid:
 
 				if (cha == '-')
 				{
-					*tok4 = tk_divminus;	//Â¤Â¥Â«Â¥Â­Â¨Â¥
+					*tok4 = tk_divminus;	//¤¥«¥­¨¥
 					nextchar();
 				}
 				else
@@ -3601,7 +3601,7 @@ yesid:
 
 			if (cha == '-')
 			{
-				*tok4 = tk_modminus;    //Â®Ã¡Ã¢Â Ã¢Â®Âª Â®Ã¢ Â¤Â¥Â«Â¥Â­Â¨Ã¯
+				*tok4 = tk_modminus;    //®áâ â®ª ®â ¤¥«¥­¨ï
 			}
 			else
 			{
@@ -3734,7 +3734,7 @@ yesid:
 			}
 			else
 			{
-				*tok4 = tk_assign;						 //Â¯Ã Â¨Ã¡Â¢Â®Â¨Ã¢Ã¬
+				*tok4 = tk_assign;						 //¯à¨á¢®¨âì
 				next = 0;
 			}
 
@@ -3750,7 +3750,7 @@ yesid:
 
 				if (cha == '=')
 				{
-					*tok4 = tk_rrequals;    //Ã¡Â¤Â¢Â¨Â£ Â¢Â¯Ã Â Â¢Â® Ã¡ Â¯Ã Â¨Ã¡Â¢Â®Â¥Â­Â¨Â¥Â¬
+					*tok4 = tk_rrequals;    //á¤¢¨£ ¢¯à ¢® á ¯à¨á¢®¥­¨¥¬
 				}
 				else
 				{
@@ -3762,7 +3762,7 @@ yesid:
 					}
 					else
 					{
-						*tok4 = tk_rr;							//Ã¡Â¤Â¢Â¨Â£ Â¢Â¯Ã Â Â¢Â®
+						*tok4 = tk_rr;							//á¤¢¨£ ¢¯à ¢®
 						next = 0;
 					}
 
@@ -3773,18 +3773,18 @@ yesid:
 
 			case '<':
 				*tok4 = tk_swap;
-				break; 			 //Â®Â¡Â¬Â¥Â­
+				break; 			 //®¡¬¥­
 
 			case '=':
 				*tok4 = tk_greaterequal;
 				itok4->type = tp_compare;
-				break; //Â¡Â®Â«Ã¬Ã¨Â¥ Â¨Â«Â¨ Ã Â Â¢Â­Â®
+				break; //¡®«ìè¥ ¨«¨ à ¢­®
 
 			default:
 				*tok4 = tk_greater;
 				next = 0;
 				itok4->type = tp_compare;
-				break; //Â¡Â®Â«Ã¬Ã¨Â¥
+				break; //¡®«ìè¥
 			}
 
 			break;
@@ -3799,7 +3799,7 @@ yesid:
 
 				if (cha == '=')
 				{
-					*tok4 = tk_llequals;    //Ã¡Â¤Â¢Â¨Â£ Â¢Â«Â¥Â¢Â® Ã¡ Â¯Ã Â¨Ã¡Â¢Â®Â¥Â­Â¨Â¥Â¬
+					*tok4 = tk_llequals;    //á¤¢¨£ ¢«¥¢® á ¯à¨á¢®¥­¨¥¬
 				}
 				else
 				{
@@ -3811,7 +3811,7 @@ yesid:
 					}
 					else
 					{
-						*tok4 = tk_ll;								 //Ã¡Â¤Â¢Â¨Â£ Â¢Â«Â¥Â¢Â®
+						*tok4 = tk_ll;								 //á¤¢¨£ ¢«¥¢®
 						next = 0;
 					}
 
@@ -3828,13 +3828,13 @@ yesid:
 			case '=':
 				*tok4 = tk_lessequal;
 				itok4->type = tp_compare;
-				break; //Â¬Â¥Â­Ã¬Ã¨Â¥ Â¨Â«Â¨ Ã Â Â¢Â­Â®
+				break; //¬¥­ìè¥ ¨«¨ à ¢­®
 
 			default:
 				*tok4 = tk_less;
 				next = 0;
 				itok4->type = tp_compare;
-				break;//Â¬Â¥Â­Ã¬Ã¨Â¥
+				break;//¬¥­ìè¥
 			}
 
 			break;
@@ -3923,7 +3923,7 @@ procofs:
 						itok4->segm = ptr->recsegm = DYNAMIC_USED;
 					}
 
-					itok4->rm = *tok4 = tk_undefofs;	//Ã¡Â¬Â¥Ã©Â¥Â­Â¨Â¥ Â¥Ã©Â¥ Â­Â¥ Â¨Â§Â¢Â¥Ã¡Ã¢Â­Â®Â© Â¬Â¥Ã¢ÂªÂ¨
+					itok4->rm = *tok4 = tk_undefofs;	//á¬¥é¥­¨¥ ¥é¥ ­¥ ¨§¢¥áâ­®© ¬¥âª¨
 					itok4->number = 0;
 					//						if(FixUp)itok4->flag|=f_reloc;	//new!!! 27.06.05 22:25
 				}
@@ -4005,7 +4005,7 @@ structofs:
 				else
 				{
 undefofs:
-					itok4->rm = *tok4 = tk_undefofs;	//Ã¡Â¬Â¥Ã©Â¥Â­Â¨Â¥ Â¥Ã©Â¥ Â­Â¥ Â¨Â§Â¢Â¥Ã¡Ã¢Â­Â®Â© Â¬Â¥Ã¢ÂªÂ¨
+					itok4->rm = *tok4 = tk_undefofs;	//á¬¥é¥­¨¥ ¥é¥ ­¥ ¨§¢¥áâ­®© ¬¥âª¨
 					itok4->number = 0;
 
 					if (FixUp)
@@ -4092,7 +4092,7 @@ undefofs:
 				}
 				else
 				{
-					itok4->rm = *tok4 = tk_undefofs;	//Ã¡Â¬Â¥Ã©Â¥Â­Â¨Â¥ Â¥Ã©Â¥ Â­Â¥ Â¨Â§Â¢Â¥Ã¡Ã¢Â­Â®Â© Â¬Â¥Ã¢ÂªÂ¨
+					itok4->rm = *tok4 = tk_undefofs;	//á¬¥é¥­¨¥ ¥é¥ ­¥ ¨§¢¥áâ­®© ¬¥âª¨
 					itok4->number = 0;
 					strcpy((char*)string4, itok4->name);
 				}
@@ -4300,7 +4300,7 @@ void NewMod(int numipar)
 			inptr--;
 			oline = linenumber;
 
-			for (i = inptr, ns = 1; ns > 0; i++) 	//Â¯Â®Â¨Ã¡Âª Â¯Â Ã Â Â¬Â¥Ã¢Ã Â®Â¢
+			for (i = inptr, ns = 1; ns > 0; i++) 	//¯®¨áª ¯ à ¬¥âà®¢
 			{
 				switch (input[i])
 				{
@@ -4504,7 +4504,7 @@ void SetNewStr(char* name)
 }
 
 int searchtree2(idrec* fptr, ITOK* itok4, int* tok4, unsigned char* string4)
-//Â¯Â®Â¨Ã¡Âª Â¢ Â¤Â¥Ã Â¥Â¢Â¥ Â¯Â¥Ã Â¥Â¬Â¥Â­Ã«Ã¥
+//¯®¨áª ¢ ¤¥à¥¢¥ ¯¥à¥¬¥­ëå
 {
 	struct idrec* ptr;
 	int cmpresult;
@@ -4591,7 +4591,7 @@ int searchtree2(idrec* fptr, ITOK* itok4, int* tok4, unsigned char* string4)
 					{
 						ptr->recpost = itok4->post = 1;
 
-						if (alignword) 	//Â¢Ã«Ã Â®Â¢Â­Ã¯Ã¢Ã¬ Â­Â  Ã§Â¥Ã¢Â­Ã«Â© Â Â¤Ã Â¥Ã¡
+						if (alignword) 	//¢ëà®¢­ïâì ­  ç¥â­ë©  ¤à¥á
 						{
 							if (postsize % 2 == 1)
 							{
@@ -4642,11 +4642,11 @@ int searchtree2(idrec* fptr, ITOK* itok4, int* tok4, unsigned char* string4)
 						case tk_apiproc:
 						case tk_declare:
 						case tk_undefproc:
-							strcpy(itok4->name, ptr->recid);	//Â¨Â¬Ã¯ Â­Ã£Â¦Â­Â® Â¤Â«Ã¯ undefine
+							strcpy(itok4->name, ptr->recid);	//¨¬ï ­ã¦­® ¤«ï undefine
 							break;
 
 						default:
-							strncpy(itok4->name, (char*)string4, IDLENGTH - 1);	//Â¨Â¬Ã¯ Â­Ã£Â¦Â­Â® Â¤Â«Ã¯ undefine
+							strncpy(itok4->name, (char*)string4, IDLENGTH - 1);	//¨¬ï ­ã¦­® ¤«ï undefine
 							break;
 						}
 
@@ -4661,7 +4661,7 @@ int searchtree2(idrec* fptr, ITOK* itok4, int* tok4, unsigned char* string4)
 				string4[0] = 0;
 			}
 
-			strcpy(itok4->name, ptr->recid);	//Â¨Â¬Ã¯ Â­Ã£Â¦Â­Â® Â¤Â«Ã¯ undefine
+			strcpy(itok4->name, ptr->recid);	//¨¬ï ­ã¦­® ¤«ï undefine
 
 			if (displaytokerrors)
 			{
@@ -5331,7 +5331,7 @@ void dodelete()
 
 				structadr.sib = THIS_REG;
 				structadr.rm = AX;
-				structadr.size = addofs;	// ???? 19.08.04 12:54 Â­Â¨Â£Â¤Â¥ Â­Â¥ Â¨Ã¡Â¯Â®Â«Ã¬Â§Ã£Â¥Ã¢Ã¡Ã¯
+				structadr.size = addofs;	// ???? 19.08.04 12:54 ­¨£¤¥ ­¥ ¨á¯®«ì§ã¥âáï
 				CallDestr(bazael->rec);
 				addESP -= am32 == FALSE ? 2 : 4;
 				op(0x58);
@@ -5567,7 +5567,7 @@ void CopyTok(int* tok4, ITOK* itok4, idrec* ptr)
 }
 
 int searchlocals(ITOK* itok4, int* tok4, unsigned char* string4)
-//Â¯Â®Â¨Ã¡Âª Â«Â®ÂªÂ Â«Ã¬Â­Ã«Ã¥ Â¯Â¥Ã Â¥Â¬Â¥Â­Ã«Ã¥ Ã¡Â¢Ã¯Â§Â Â­Â®Â£Â® Ã¡Â¯Â¨Ã¡ÂªÂ 
+//¯®¨áª «®ª «ì­ëå ¯¥à¥¬¥­ëå á¢ï§ ­®£® á¯¨áª 
 {
 	if (skiplocals)
 	{
@@ -5870,7 +5870,7 @@ locvar:
 	return FALSE;
 }
 
-void dostructvar2(int* tok4, ITOK* itok4, struct structteg* tteg, unsigned char* string4)	//Ã Â Â§Â¡Â®Ã  Ã¡Ã¢Ã Ã£ÂªÃ¢Ã£Ã  Â­Â  Â¯Â¥Ã Â¥Â¬Â¥Â­Â­Ã«Â¥ Â¨ Ã¡Ã¢Ã Ã£ÂªÃ¢Ã£Ã Ã«
+void dostructvar2(int* tok4, ITOK* itok4, struct structteg* tteg, unsigned char* string4)	//à §¡®à áâàãªâãà ­  ¯¥à¥¬¥­­ë¥ ¨ áâàãªâãàë
 {
 	struct elementteg* bazael;
 	int numel = 0;
@@ -5884,10 +5884,10 @@ void dostructvar2(int* tok4, ITOK* itok4, struct structteg* tteg, unsigned char*
 	structteg* subteg = NULL;
 	structadr = *itok4;
 	//	bazael=tteg->baza;
-	whitespace();//Â¯Ã Â®Â¯Ã£Ã¡Âª Â­Â¥Â§Â­Â Ã§Â Ã©Â¨Ã¥ Ã¡Â¨Â¬Â¢Â®Â«Â®Â¢
+	whitespace();//¯à®¯ãáª ­¥§­ ç é¨å á¨¬¢®«®¢
 	cstring = (char*)MALLOC(STRLEN);
 
-	if (cha == '[') 	//[	Â­Â®Â¬Â¥Ã  Ã¡Ã¢Ã Ã£ÂªÃ¢Ã£Ã Ã«
+	if (cha == '[') 	//[	­®¬¥à áâàãªâãàë
 	{
 		usenumstruct = TRUE;
 		nextchar();
@@ -5901,7 +5901,7 @@ void dostructvar2(int* tok4, ITOK* itok4, struct structteg* tteg, unsigned char*
 			bufrm = NULL;
 		}
 
-		if (i == tk_number) 	//Ã§Â¨Ã¡Â«Â®Â¢Â®Â©
+		if (i == tk_number) 	//ç¨á«®¢®©
 		{
 			ITOK dstok;
 			memcpy(&dstok, itok4, sizeof(ITOK));
@@ -5968,7 +5968,7 @@ notnum:
 		}
 
 		itok4->flag |= f_useidx;
-		whitespace();//Â¯Ã Â®Â¯Ã£Ã¡Âª Â­Â¥Â§Â­Â Ã§Â Ã©Â¨Ã¥ Ã¡Â¨Â¬Â¢Â®Â«Â®Â¢
+		whitespace();//¯à®¯ãáª ­¥§­ ç é¨å á¨¬¢®«®¢
 	}
 
 	if (cha == '.')
@@ -6124,7 +6124,7 @@ notnum:
 					}
 				}
 
-				/*				if(strcmp(bazael->name,tteg->name)==0&&itok4->rec){	//Â¢Ã«Â§Â®Â¢ ÂªÂ®Â­Ã¡Ã¢Ã Ã£ÂªÃ¢Â®Ã Â 
+				/*				if(strcmp(bazael->name,tteg->name)==0&&itok4->rec){	//¢ë§®¢ ª®­áâàãªâ®à 
 									ptr=itok4->rec;
 				//					printf("constructor %08X\n",ptr);
 								}*/
@@ -6182,7 +6182,7 @@ notnum:
 				}
 				else
 				{
-					itok4->sib = (am32 == FALSE ? rm_d16 : rm_d32);	//Ã£Ã¡Ã¢Â Â­Â®Â¢ÂªÂ¨ Â¯Â® Ã£Â¬Â®Â«Ã§Â Â­Â¨Ã®
+					itok4->sib = (am32 == FALSE ? rm_d16 : rm_d32);	//ãáâ ­®¢ª¨ ¯® ã¬®«ç ­¨î
 					itok4->segm = DS;
 				}
 
@@ -6295,7 +6295,7 @@ notbit:
 		}
 		else
 		{
-			itok4->rm = (am32 == FALSE ? rm_d16 : rm_d32);	//Ã£Ã¡Ã¢Â Â­Â®Â¢ÂªÂ¨ Â¯Â® Ã£Â¬Â®Â«Ã§Â Â­Â¨Ã®
+			itok4->rm = (am32 == FALSE ? rm_d16 : rm_d32);	//ãáâ ­®¢ª¨ ¯® ã¬®«ç ­¨î
 
 			if (itok4->segm == USEDSTR && itok4->sib >= CODE16)
 			{
@@ -6316,12 +6316,12 @@ notbit:
 	free(cstring);
 }
 
-void dosizeof(ITOK* itok4)	//Â®Â¯Ã  Â§Â­Â Ã§Â¥Â­Â¨Â¥ sizeof
+void dosizeof(ITOK* itok4)	//®¯à §­ ç¥­¨¥ sizeof
 {
 	struct structteg* tteg;
 	int i, brase = FALSE;
 	ITOK cstok;
-	whitespace();//Â¯Ã Â®Â¯Ã£Ã¡Âª Â­Â¥Â§Â­Â Ã§Â Ã©Â¨Ã¥ Ã¡Â¨Â¬Â¢Â®Â«Â®Â¢
+	whitespace();//¯à®¯ãáª ­¥§­ ç é¨å á¨¬¢®«®¢
 	itok4->number = 0;
 
 	if (cha == '(')
@@ -6477,7 +6477,7 @@ void dosizeof(ITOK* itok4)	//Â®Â¯Ã  Â§Â­Â Ã§Â¥Â­Â¨Â¥ sizeof
 		}
 	}
 
-	whitespace();//Â¯Ã Â®Â¯Ã£Ã¡Âª Â­Â¥Â§Â­Â Ã§Â Ã©Â¨Ã¥ Ã¡Â¨Â¬Â¢Â®Â«Â®Â¢
+	whitespace();//¯à®¯ãáª ­¥§­ ç é¨å á¨¬¢®«®¢
 
 	if (brase)
 	{
@@ -6615,7 +6615,7 @@ cont1:
 
 		if (strinf.bufstr == NULL)
 		{
-			itok4->rm = (am32 == FALSE ? rm_d16 : rm_d32);	//Ã£Ã¡Ã¢Â Â­Â®Â¢ÂªÂ¨ Â¯Â® Ã£Â¬Â®Â«Ã§Â Â­Â¨Ã®
+			itok4->rm = (am32 == FALSE ? rm_d16 : rm_d32);	//ãáâ ­®¢ª¨ ¯® ã¬®«ç ­¨î
 
 			if (itok4->post != 0)
 			{
@@ -6676,17 +6676,17 @@ cont2:
 	cha = ocha;
 }
 
-void AddUndefOff(int segm, char* ostring)	//Â§Â Ã¤Â¨ÂªÃ¡Â¨Ã Â®Â¢Â Ã¢Ã¬ Â®Â¡Ã Â Ã©Â¥Â­Â¨Â¥ Âª Â¥Ã©Â¥ Â­Â¥ Â®Â¡ÃªÃ¯Â¢Â«Â¥Â­Ã«Â¬ Â¨Â¬Â¥Â­Â Â¬
-/*segm - Ã¡Â¥Â£Â¬Â¥Â­Ã¢ Â®Ã¢ÂªÃ£Â¤Â  Â¨Â¤Â¥Ã¢ Â®Â¡Ã Â Ã©Â¥Â­Â¨Â¥
- 0 - Ã¡Â¥Â£Â¬Â¥Â­Ã¢ ÂªÂ®Â¤Â 
- 1 - Ã¡Â¥Â£Â¬Â¥Â­Ã¢ Â¤Â Â­Â­Ã«Ã¥
- 2 - Ã¡Â¥Â£Â¬Â¥Â­Ã¢ ÂªÂ®Â¤Â , Â­Â® Â¡Â¥Â§ Â§Â Â­Â¥Ã¡Â¥Â­Â¨Ã¯ Â¢ Ã¢Â Â¡Â«Â¨Ã¦Ã£ Â¯Â¥Ã Â¥Â¬Â¥Ã©Â¥Â­Â¨Â©
- 3 - Ã¡Â¥Â£Â¬Â¥Â­Ã¢ Â¤Â Â­Â­Ã«Ã¥, Â­Â® Â¡Â¥Â§ Â§Â Â­Â¥Ã¡Â¥Â­Â¨Ã¯ Â¢ Ã¢Â Â¡Â«Â¨Ã¦Ã£ Â¯Â¥Ã Â¥Â¬Â¥Ã©Â¥Â­Â¨Â©
+void AddUndefOff(int segm, char* ostring)	//§ ä¨ªá¨à®¢ âì ®¡à é¥­¨¥ ª ¥é¥ ­¥ ®¡êï¢«¥­ë¬ ¨¬¥­ ¬
+/*segm - á¥£¬¥­â ®âªã¤  ¨¤¥â ®¡à é¥­¨¥
+ 0 - á¥£¬¥­â ª®¤ 
+ 1 - á¥£¬¥­â ¤ ­­ëå
+ 2 - á¥£¬¥­â ª®¤ , ­® ¡¥§ § ­¥á¥­¨ï ¢ â ¡«¨æã ¯¥à¥¬¥é¥­¨©
+ 3 - á¥£¬¥­â ¤ ­­ëå, ­® ¡¥§ § ­¥á¥­¨ï ¢ â ¡«¨æã ¯¥à¥¬¥é¥­¨©
 */
 {
 	UNDEFOFF* curptr;
 
-	if (undefoffstart == NULL) 	//Â¥Ã¡Â«Â¨ Â¥Ã©Â¥ Â­Â¥ Â¡Ã«Â«Â® Â­Â¥Â¨Â§Â¢ Â¬Â¥Ã¢Â®Âª
+	if (undefoffstart == NULL) 	//¥á«¨ ¥é¥ ­¥ ¡ë«® ­¥¨§¢ ¬¥â®ª
 	{
 		undefoffstart = (UNDEFOFF*)MALLOC(sizeof(UNDEFOFF));
 		memset(undefoffstart, 0, sizeof(UNDEFOFF));
@@ -6695,9 +6695,9 @@ void AddUndefOff(int segm, char* ostring)	//Â§Â Ã¤Â¨ÂªÃ¡Â¨Ã Â®Â¢Â Ã¢Ã¬ Â®Â¡Ã Â Ã
 
 	for (curptr = undefoffstart;; curptr = curptr->next)
 	{
-		if (strcmp(curptr->name, ostring) == 0) 	//Ã Â Â­Â¥Â¥ Ã£Â¦Â¥ Â®Â¡Ã Â Ã©Â Â«Â¨Ã¡Ã¬ Âª Â­Â¥Â©
+		if (strcmp(curptr->name, ostring) == 0) 	//à ­¥¥ ã¦¥ ®¡à é «¨áì ª ­¥©
 		{
-			//Ã¢Â Â¡Â«Â¨Ã¦Â  Â®Â¡Ã Â Ã©Â¥Â­Â¨Â© Âª undef
+			//â ¡«¨æ  ®¡à é¥­¨© ª undef
 			if (curptr->pos == NULL)
 			{
 				curptr->pos = (IOFS*)MALLOC(sizeof(IOFS) * (curptr->num + 1));
@@ -6717,11 +6717,11 @@ void AddUndefOff(int segm, char* ostring)	//Â§Â Ã¤Â¨ÂªÃ¡Â¨Ã Â®Â¢Â Ã¢Ã¬ Â®Â¡Ã Â Ã
 
 		if (curptr->next == NULL)
 		{
-			break;    //ÂªÂ®Â­Â¥Ã¦ Ã¡Â¯Â¨Ã¡ÂªÂ 
+			break;    //ª®­¥æ á¯¨áª 
 		}
 	}
 
-	curptr = curptr->next = (UNDEFOFF*)MALLOC(sizeof(UNDEFOFF));	//Â­Â®Â¢Â Ã¯ undef
+	curptr = curptr->next = (UNDEFOFF*)MALLOC(sizeof(UNDEFOFF));	//­®¢ ï undef
 	memset(curptr, 0, sizeof(UNDEFOFF));
 	strcpy(curptr->name, ostring);
 	curptr->num = 1;
@@ -6739,12 +6739,12 @@ int CheckUseAsUndef(unsigned char* name)
 
 	if (undefoffstart == NULL)
 	{
-		return 0;    //Â­Â¥ Â¡Ã«Â«Â® Â®Â¡Ã Â Ã©Â¥Â­Â¨Â© Âª undef
+		return 0;    //­¥ ¡ë«® ®¡à é¥­¨© ª undef
 	}
 
 	for (curptr = undefoffstart;; curptr = curptr->next)
 	{
-		if (strcmp(curptr->name, (char*)name) == 0) 	//Â­Â Ã¨Â«Â¨
+		if (strcmp(curptr->name, (char*)name) == 0) 	//­ è«¨
 		{
 			count = curptr->num;
 			break;
@@ -6759,10 +6759,10 @@ int CheckUseAsUndef(unsigned char* name)
 	return count;
 }
 
-int FindOff(unsigned char* name, int base)	//Â¯Â®Â¨Ã¡Âª Ã¡Ã¡Ã«Â«Â®Âª Â­Â  Ã¢Â¥ÂªÃ£Ã©Â¥Â¥ Â¨Â¬Ã¯
+int FindOff(unsigned char* name, int base)	//¯®¨áª ááë«®ª ­  â¥ªãé¥¥ ¨¬ï
 {
 	/*-----------------13.08.00 23:48-------------------
-	 Â¯Ã Â®Ã¡Â¬Â®Ã¢Ã Â¥Ã¢Ã¬ Â¯Ã Â®Ã¦Â¥Â¤Ã£Ã Ã£ Â¯Ã Â¨ Â¢Â¢Â®Â¤Â¥ Ã Â Â§Â¤Â¥Â«Â¥Â­Â¨Ã¯ Â¤Â Â­Â­Ã«Ã¥ Â¨ ÂªÂ®Â¤Â 
+	 ¯à®á¬®âà¥âì ¯à®æ¥¤ãàã ¯à¨ ¢¢®¤¥ à §¤¥«¥­¨ï ¤ ­­ëå ¨ ª®¤ 
 		--------------------------------------------------*/
 	UNDEFOFF* curptr, *prev;
 	unsigned char segm;
@@ -6771,19 +6771,19 @@ int FindOff(unsigned char* name, int base)	//Â¯Â®Â¨Ã¡Âª Ã¡Ã¡Ã«Â«Â®Âª Â­Â  Ã¢Â¥Âª
 
 	if (undefoffstart == NULL)
 	{
-		return 0;    //Â­Â¥ Â¡Ã«Â«Â® Â®Â¡Ã Â Ã©Â¥Â­Â¨Â© Âª undef
+		return 0;    //­¥ ¡ë«® ®¡à é¥­¨© ª undef
 	}
 
 	for (curptr = undefoffstart;; curptr = curptr->next)
 	{
-		if (strcmp(curptr->name, (char*)name) == 0) 	//Â­Â Ã¨Â«Â¨
+		if (strcmp(curptr->name, (char*)name) == 0) 	//­ è«¨
 		{
 			for (int i = 0; i < curptr->num; i++)
 			{
 				ofs = (curptr->pos + i)->ofs;
 				segm = (curptr->pos + i)->dataseg;
 
-				if (base == DS && dynamic_flag) 	//Â¡Ã«Â«Â® Â®Â¡Ã Â Ã©Â¥Â­Â¨Â¥ Âª Â¤Â¨Â­Â Â¬Â¨Ã§Â¥Ã¡ÂªÂ¨Â¬ Â¨Â­Â¨Ã¦. Â¯Â¥Ã Â¥Â¬Â¥Â­Â­Ã«Â¬
+				if (base == DS && dynamic_flag) 	//¡ë«® ®¡à é¥­¨¥ ª ¤¨­ ¬¨ç¥áª¨¬ ¨­¨æ. ¯¥à¥¬¥­­ë¬
 				{
 					CheckPosts();
 					(postbuf + posts)->type = (unsigned short)(am32 == 0 ? DIN_VAR : DIN_VAR32);
@@ -6792,7 +6792,7 @@ int FindOff(unsigned char* name, int base)	//Â¯Â®Â¨Ã¡Âª Ã¡Ã¡Ã«Â«Â®Âª Â­Â  Ã¢Â¥Âª
 				}
 				else
 				{
-					if ((segm & 1) == 0 || modelmem == TINY) 	//Â¢ Ã¡Â¥Â£Â¬Â¥Â­Ã¢Â¥ ÂªÂ®Â¤Â 
+					if ((segm & 1) == 0 || modelmem == TINY) 	//¢ á¥£¬¥­â¥ ª®¤ 
 					{
 						if (base != VARPOST)
 						{
@@ -6895,7 +6895,7 @@ int FindOff(unsigned char* name, int base)	//Â¯Â®Â¨Ã¡Âª Ã¡Ã¡Ã«Â«Â®Âª Â­Â  Ã¢Â¥Âª
 	return count;
 }
 
-int FindUseName(char* name)	//Â¯Â®Â¨Ã¡Âª Ã¡Ã¡Ã«Â«Â®Âª Â­Â  Ã¢Â¥ÂªÃ£Ã©Â¥Â¥ Â¨Â¬Ã¯
+int FindUseName(char* name)	//¯®¨áª ááë«®ª ­  â¥ªãé¥¥ ¨¬ï
 {
 	UNDEFOFF* curptr;
 
@@ -6903,7 +6903,7 @@ int FindUseName(char* name)	//Â¯Â®Â¨Ã¡Âª Ã¡Ã¡Ã«Â«Â®Âª Â­Â  Ã¢Â¥ÂªÃ£Ã©Â¥Â¥ Â¨Â¬Ã¯
 	{
 		for (curptr = undefoffstart;; curptr = curptr->next)
 		{
-			if (strcmp(curptr->name, (char*)name) == 0) 	//Â­Â Ã¨Â«Â¨
+			if (strcmp(curptr->name, (char*)name) == 0) 	//­ è«¨
 			{
 				return curptr->num;
 			}
@@ -7035,7 +7035,7 @@ int FastSearch(unsigned char* list, short* ofs, int type, char* str)
 }
 
 /*-----------------05.01.00 22:56-------------------
- ÂÂ Â¡Â®Ã¢Â  Ã¡Â® Ã¡Ã¢Ã Ã£ÂªÃ¢Ã£Ã Â Â¬Â¨
+  ¡®â  á® áâàãªâãà ¬¨
 	--------------------------------------------------*/
 
 int GetVarSize(int var)
@@ -7175,7 +7175,7 @@ int IsClass(structteg* searcht)
 	return FALSE;
 }
 
-struct structteg* CreatTeg(int Global, int useunion, int noname)	//Ã¡Â®Â§Â¤Â Ã¢Ã¬ Â­Â®Â¢Ã«Â© Ã¢Â¥Â£
+struct structteg* CreatTeg(int Global, int useunion, int noname)	//á®§¤ âì ­®¢ë© â¥£
 {
 	struct structteg* newteg, *tteg;
 	struct elementteg* bazael;
@@ -7526,12 +7526,12 @@ struct structteg* CreatTeg(int Global, int useunion, int noname)	//Ã¡Â®Â§Â¤Â Ã¢Ã
 			}
 
 		default:
-			skipfind = LOCAL;	//Â§Â Â¯Ã Â¥Ã¢Â¨Ã¢Ã¬ Â¯Â®Â¨Ã¡Âª Â¢ Â£Â«Â®Â¡Â Â«Ã¬Â­Â®Â¬ Â¨ Â«Â®ÂªÂ Â«Ã¬Â­Â®Â¬ Ã¡Â¯Â¨Ã¡ÂªÂ¥
+			skipfind = LOCAL;	//§ ¯à¥â¨âì ¯®¨áª ¢ £«®¡ «ì­®¬ ¨ «®ª «ì­®¬ á¯¨áª¥
 			utestInitVar = TRUE;
 
-			if ((i = testInitVar()) == FALSE || i == 2) 	//Â®Â¯Ã Â¥Â¤Â¥Â«Â¥Â­Â¨Â¥ Â¯Ã Â®Ã¦Â¥Â¤Ã£Ã Ã« Â¯Â®ÂªÂ  Â­Â¥ Â®Â¡Ã Â Â¡Â Ã¢Ã«Â¢Â Â¥Â¬
+			if ((i = testInitVar()) == FALSE || i == 2) 	//®¯à¥¤¥«¥­¨¥ ¯à®æ¥¤ãàë ¯®ª  ­¥ ®¡à ¡ âë¢ ¥¬
 			{
-				skipfind = FALSE;	//Ã Â Â§Ã Â¥Ã¨Â¨Ã¢Ã¬ Â¯Â®Â¨Ã¡Âª
+				skipfind = FALSE;	//à §à¥è¨âì ¯®¨áª
 				FindEndLex();
 				datatype_expected();
 				nexttok();
@@ -7564,7 +7564,7 @@ struct structteg* CreatTeg(int Global, int useunion, int noname)	//Ã¡Â®Â§Â¤Â Ã¢Ã
 								if(itok.npointr)orm=am32==FALSE?tk_word:tk_dword;
 								npointr=0;
 								nexttok();
-								while(tok==tk_mult){	//Ã£ÂªÂ Â§Â Ã¢Â¥Â«Ã¬ Â­Â  Â¯Ã Â®Ã¦Â¥Â¤Ã£Ã Ã£
+								while(tok==tk_mult){	//ãª § â¥«ì ­  ¯à®æ¥¤ãàã
 									npointr++;
 									nexttok();
 								}
@@ -7580,7 +7580,7 @@ locvar:
 			do
 			{
 				tsize = size;
-				skipfind = LOCAL;	//Â§Â Â¯Ã Â¥Ã¢Â¨Ã¢Ã¬ Â¯Â®Â¨Ã¡Âª Â¢ Â£Â«Â®Â¡Â Â«Ã¬Â­Â®Â¬ Â¨ Â«Â®ÂªÂ Â«Ã¬Â­Â®Â¬ Ã¡Â¯Â¨Ã¡ÂªÂ¥
+				skipfind = LOCAL;	//§ ¯à¥â¨âì ¯®¨áª ¢ £«®¡ «ì­®¬ ¨ «®ª «ì­®¬ á¯¨áª¥
 				nexttok();
 
 				if (tok == tk_colon)
@@ -7611,7 +7611,7 @@ dproc2:
 				{
 					utestInitVar = TRUE;
 
-					if (testInitVar() == FALSE) 	//Â®Â¯Ã Â¥Â¤Â¥Â«Â¥Â­Â¨Â¥ Â¯Ã Â®Ã¦Â¥Â¤Ã£Ã Ã« Â¯Â®ÂªÂ  Â­Â¥ Â®Â¡Ã Â Â¡Â Ã¢Ã«Â¢Â Â¥Â¬
+					if (testInitVar() == FALSE) 	//®¯à¥¤¥«¥­¨¥ ¯à®æ¥¤ãàë ¯®ª  ­¥ ®¡à ¡ âë¢ ¥¬
 					{
 						idalreadydefined();
 					}
@@ -7640,7 +7640,7 @@ dproc2:
 							npointr = 0;
 							nexttok();
 
-							while (tok == tk_mult) 	//Ã£ÂªÂ Â§Â Ã¢Â¥Â«Ã¬ Â­Â  Â¯Ã Â®Ã¦Â¥Â¤Ã£Ã Ã£
+							while (tok == tk_mult) 	//ãª § â¥«ì ­  ¯à®æ¥¤ãàã
 							{
 								npointr++;
 								nexttok();
@@ -7681,7 +7681,7 @@ dproc2:
 						{
 							idrec* nrec;
 							nrec = (bazael + numel)->rec = (idrec*)MALLOC(sizeof(idrec));
-							strcpy(nrec->recid, (bazael + numel)->name); //Ã¡ÂªÂ®Â¯Â¨Ã  Â­Â Â§Â¢Â Â­Â¨Â¥
+							strcpy(nrec->recid, (bazael + numel)->name); //áª®¯¨à ­ §¢ ­¨¥
 							nrec->newid = NULL;
 							nrec->npointr = (unsigned short)npointr;
 							nrec->flag = oflag;
@@ -7722,7 +7722,7 @@ dproc2:
 					{
 						if (tok == tk_id)
 						{
-							oflag |= (comfile == file_w32 ? tp_stdcall : tp_pascal);    //Ã¢Â¨Â¯ Â¯Ã Â®Ã¦ Â¯Â® Ã£Â¬Â®Â«Ã§Â Â­Â¨Ã®
+							oflag |= (comfile == file_w32 ? tp_stdcall : tp_pascal);    //â¨¯ ¯à®æ ¯® ã¬®«ç ­¨î
 						}
 						else
 						{
@@ -7777,7 +7777,7 @@ dproc:
 							}
 						}
 
-						skipfind = FALSE;	//Ã Â Â§Ã Â¥Ã¨Â¨Ã¢Ã¬ Â¯Â®Â¨Ã¡Âª
+						skipfind = FALSE;	//à §à¥è¨âì ¯®¨áª
 						expecting(tk_openbracket);
 
 						if ((oflag & f_typeproc) == tp_fastcall)
@@ -7791,7 +7791,7 @@ dproc:
 
 						skipfind = LOCAL;
 						nrec = (bazael + numel)->rec = (idrec*)MALLOC(sizeof(idrec));
-						strcpy(nrec->recid, (bazael + numel)->name); //Ã¡ÂªÂ®Â¯Â¨Ã  Â­Â Â§Â¢Â Â­Â¨Â¥
+						strcpy(nrec->recid, (bazael + numel)->name); //áª®¯¨à ­ §¢ ­¨¥
 						nrec->newid = NULL;
 
 						//						printf("name=%s param=%s\n",nrec->recid,param);
@@ -7898,7 +7898,7 @@ endelteg:
 						{
 							idrec* nrec;
 							nrec = (bazael + numel)->rec = (idrec*)MALLOC(sizeof(idrec));
-							strcpy(nrec->recid, (bazael + numel)->name); //Ã¡ÂªÂ®Â¯Â¨Ã  Â­Â Â§Â¢Â Â­Â¨Â¥
+							strcpy(nrec->recid, (bazael + numel)->name); //áª®¯¨à ­ §¢ ­¨¥
 							nrec->line = linenumber;
 							nrec->file = currentfileinfo;
 							nrec->count = 0;
@@ -7939,17 +7939,17 @@ endelteg:
 
 							if (tok == tk_assign)
 							{
-								skipfind = FALSE;	//Ã Â Â§Ã Â¥Ã¨Â¨Ã¢Ã¬ Â¯Â®Â¨Ã¡Âª
+								skipfind = FALSE;	//à §à¥è¨âì ¯®¨áª
 								nrec->recpost = 0;
 
 								if (localtok == tk_struct)
 								{
 									if (alignword)
 									{
-										alignersize += AlignCD(DS, 2);    //Â¢Ã«Ã Â®Â¢Â­Ã¯Ã¢Ã¬
+										alignersize += AlignCD(DS, 2);    //¢ëà®¢­ïâì
 									}
 
-									nrec->recnumber = outptrdata;	//Â Â¤Ã Â¥Ã¡ Â­Â Ã§Â Â«Â  Ã¡Ã¢Ã Ã£ÂªÃ¢Ã£Ã Ã«
+									nrec->recnumber = outptrdata;	// ¤à¥á ­ ç «  áâàãªâãàë
 									i = initstructvar(tteg, numt);
 
 									if (numt == 0)
@@ -8000,7 +8000,7 @@ endelteg:
 									}
 								}
 
-								if (alignword) 	//Â¢Ã«Ã Â®Â¢Â­Ã¯Ã¢Ã¬ Â­Â  Ã§Â¥Ã¢Â­Ã«Â© Â Â¤Ã Â¥Ã¡
+								if (alignword) 	//¢ëà®¢­ïâì ­  ç¥â­ë©  ¤à¥á
 								{
 									if (postsize % 2 == 1)
 									{
@@ -8049,7 +8049,7 @@ endelteg:
 			}
 			while (tok == tk_camma);
 
-			skipfind = FALSE;	//Ã Â Â§Ã Â¥Ã¨Â¨Ã¢Ã¬ Â¯Â®Â¨Ã¡Âª
+			skipfind = FALSE;	//à §à¥è¨âì ¯®¨áª
 			seminext();
 		}
 	};//while(tok!=tk_closebrace&&tok!=tk_eof);
@@ -8106,7 +8106,7 @@ endelteg:
 			strcpy((bazael + numel)->name, itok.name);
 			strcat((bazael + numel)->name, "~");
 			itok.rec = nrec = (bazael + numel)->rec = (idrec*)MALLOC(sizeof(idrec));
-			strcpy(nrec->recid, itok.name); //Ã¡ÂªÂ®Â¯Â¨Ã  Â­Â Â§Â¢Â Â­Â¨Â¥
+			strcpy(nrec->recid, itok.name); //áª®¯¨à ­ §¢ ­¨¥
 			nrec->newid = NULL;
 			itok.npointr = nrec->npointr = 0;
 			itok.rm = nrec->recrm = tk_void;
@@ -8171,7 +8171,7 @@ endelteg:
 	return newteg;
 }
 
-struct structteg* FindTeg(int Global, char* name)	//Â­Â Â©Ã¢Â¨ Ã¢Â¥Â£
+struct structteg* FindTeg(int Global, char* name)	//­ ©â¨ â¥£
 {
 	struct structteg* tteg;
 	int i;
@@ -8249,7 +8249,7 @@ unsigned int SaveVal(unsigned long long val, int type)
 
 void FillTeg(unsigned long long val, unsigned int numel, struct structteg* tteg)
 /*-----------------03.10.99 00:20-------------------
- Â§Â Â¯Â®Â«Â­Â¨Ã¢Ã¬ Ã¡Ã¢Ã Ã£ÂªÃ¢Ã£Ã Ã£ Â®Â¤Â¨Â­Â ÂªÂ®Â¢Ã«Â¬Â¨ Â¢Â¥Â«Â¨Ã§Â¨Â­Â Â¬Â¨
+ § ¯®«­¨âì áâàãªâãàã ®¤¨­ ª®¢ë¬¨ ¢¥«¨ç¨­ ¬¨
  --------------------------------------------------*/
 {
 	struct elementteg* elem = tteg->baza;
@@ -8314,15 +8314,15 @@ void FillTeg(unsigned long long val, unsigned int numel, struct structteg* tteg)
 
 unsigned int Fill2Teg(unsigned int numel, struct structteg* tteg)
 /*-----------------03.10.99 00:20-------------------
- Â§Â Â¯Â®Â«Â­Â¨Ã¢Ã¬ Ã¡Ã¢Ã Ã£ÂªÃ¢Ã£Ã Ã£ Â¢Â¥Â«Â¨Ã§Â¨Â­Â Â¬Â¨
+ § ¯®«­¨âì áâàãªâãàã ¢¥«¨ç¨­ ¬¨
  --------------------------------------------------*/
 {
 	unsigned long long hold;
 	struct elementteg* elem = tteg->baza;
-	unsigned int tnumel = 0;	//Â­Â®Â¬Â¥Ã  Â¥Â«Â¥Â¬Â¥Â­Ã¢Â  Â®Â¤Â­Â®Â£Â® Ã¢Â¨Â¯Â 
-	unsigned int ttype = 0;	//Â­Â®Â¬Â¥Ã  Ã­Â«Â¥Â¬Â¥Â­Ã¢Â  Ã¡Ã¢Ã Ã£ÂªÃ¢Ã£Ã Ã«
-	unsigned int nums = 0;	//Â­Â®Â¬Â¥Ã  ÂªÂ®Â¯Â¨Â¨ Ã¡Ã¢Ã Ã£ÂªÃ¢Ã£Ã Ã«
-	unsigned int loop = 0;	//Â§Â Â¯Â®Â«Â­Â¥Â­Ã«Â© Ã Â Â§Â¬Â¥Ã 
+	unsigned int tnumel = 0;	//­®¬¥à ¥«¥¬¥­â  ®¤­®£® â¨¯ 
+	unsigned int ttype = 0;	//­®¬¥à í«¥¬¥­â  áâàãªâãàë
+	unsigned int nums = 0;	//­®¬¥à ª®¯¨¨ áâàãªâãàë
+	unsigned int loop = 0;	//§ ¯®«­¥­ë© à §¬¥à
 	int type = tokens;
 	int bitofs = 0;
 	unsigned int startstruct = outptrdata;
@@ -8597,7 +8597,7 @@ unsigned int initstructvar(structteg* tteg, int numel)
 	unsigned int loop = 0;
 	nexttok();
 
-	switch (tok) 	//Â§Â Â¯Â®Â«Â­Â¨Ã¢Ã¬ Â¢Â¥Â«Â¨Ã§Â¨Â­Â Â¬Â¨
+	switch (tok) 	//§ ¯®«­¨âì ¢¥«¨ç¨­ ¬¨
 	{
 	case tk_minus:
 	case tk_number:
@@ -8610,7 +8610,7 @@ unsigned int initstructvar(structteg* tteg, int numel)
 		loop = numel * tteg->size;
 		break;
 
-	case tk_from:	//Ã¡Ã§Â¨Ã¢Â Ã¢Ã¬ Ã¤Â Â©Â« Ã¡ Â¤Â Â­Â­Ã«Â¬Â¨
+	case tk_from:	//áç¨â âì ä ©« á ¤ ­­ë¬¨
 		nexttok();
 		loop = dofrom();
 
@@ -8622,7 +8622,7 @@ unsigned int initstructvar(structteg* tteg, int numel)
 		nexttok();
 		break;
 
-	case tk_extract:	//Ã¡Ã§Â¨Ã¢Â Ã¢Ã¬ Ã¤Ã Â Â£Â¬Â¥Â­Ã¢ Ã¤Â Â©Â«Â  Ã¡ Â¤Â Â­Â­Ã«Â¬Â¨
+	case tk_extract:	//áç¨â âì äà £¬¥­â ä ©«  á ¤ ­­ë¬¨
 		nexttok();
 		loop = doextract();
 
@@ -8633,7 +8633,7 @@ unsigned int initstructvar(structteg* tteg, int numel)
 
 		break;
 
-	case tk_openbrace:	//Â¬Â Ã¡Ã¡Â¨Â¢ Â¤Â Â­Â­Ã«Ã¥
+	case tk_openbrace:	//¬ áá¨¢ ¤ ­­ëå
 		nexttok();
 		loop = Fill2Teg(numel, tteg);
 
@@ -8665,7 +8665,7 @@ unsigned int initstructvar(structteg* tteg, int numel)
 	return loop;
 }
 
-void InitStruct2(unsigned int flag, structteg* tteg)	//Â¨Â­Â¨Ã¦Â¨Â Â«Â¨Â§Â¨Ã Â®Â¢Â Ã¢Ã¬ Â£Â«Â®Â¡Â Â«Ã¬Â­Ã£Ã® Ã¡Ã¢Ã Ã£ÂªÃ¢Ã£Ã Ã£
+void InitStruct2(unsigned int flag, structteg* tteg)	//¨­¨æ¨ «¨§¨à®¢ âì £«®¡ «ì­ãî áâàãªâãàã
 {
 	struct idrec* newrec = NULL, *ptr;
 	int numel, count;
@@ -8680,30 +8680,30 @@ void InitStruct2(unsigned int flag, structteg* tteg)	//Â¨Â­Â¨Ã¦Â¨Â Â«Â¨Â§Â¨Ã Â®Â
 		switch (tok)
 		{
 		case tk_id:
-		case tk_ID:	//Â¨Â­Â¨Ã¦Â¨Â Â«Â¨Â§Â¨Ã Â®Â¢Â Ã¢Ã¬ Ã¡Ã¢Ã Ã£ÂªÃ¢Ã£Ã Ã£
-			//Â¢Ã«Â¤Â¥Â«Â¨Ã¢Ã¬ Â¯Â Â¬Ã¯Ã¢Ã¬ Â¯Â®Â¤ Â­Â®Â¢Ã£Ã® Ã¡Ã¢Ã Ã£ÂªÃ¢
+		case tk_ID:	//¨­¨æ¨ «¨§¨à®¢ âì áâàãªâãàã
+			//¢ë¤¥«¨âì ¯ ¬ïâì ¯®¤ ­®¢ãî áâàãªâ
 			newrec = (struct idrec*)MALLOC(sizeof(struct idrec));
 
 			//				if(strcmp(itok.name,"ccchrg")==0)printf("rec=%08X teg=%08X size=%X %s\n",newrec,tteg,sizeof(idrec),itok.name);
 
-			ptr = ((flag & f_static) == 0 ? treestart : staticlist);	//Â­Â Ã§Â Â«Â® Â¤Â¥Ã Â¥Â¢Â 
+			ptr = ((flag & f_static) == 0 ? treestart : staticlist);	//­ ç «® ¤¥à¥¢ 
 
 			if (ptr == NULL)
 			{
-				((flag & f_static) == 0 ? treestart : staticlist) = newrec;    //Â­Â Ã§Â Â«Â® Â¤Â¥Ã Â¥Â¢Â 
+				((flag & f_static) == 0 ? treestart : staticlist) = newrec;    //­ ç «® ¤¥à¥¢ 
 			}
-			else 	//Â¯Â®Â¨Ã¡Âª Ã¡Ã¢Ã Â®ÂªÂ¨ Â¢ Â¤Â¥Ã Â¥Â¢Â¥
+			else 	//¯®¨áª áâà®ª¨ ¢ ¤¥à¥¢¥
 			{
 				while (((numel = strcmp(ptr->recid, itok.name)) < 0 && ptr->left != NULL) || (numel > 0 && ptr->right != NULL))
 				{
 					ptr = (numel < 0 ? ptr->left : ptr->right);
 				}
 
-				(numel < 0 ? ptr->left : ptr->right) = newrec;	//Ã¡Ã¢Ã Â®ÂªÂ  Â¬Â¥Â­Ã¬Ã¨Â¥
+				(numel < 0 ? ptr->left : ptr->right) = newrec;	//áâà®ª  ¬¥­ìè¥
 			}
 
 			newrec->recsib = 0;
-			strcpy(newrec->recid, itok.name); //Ã¡ÂªÂ®Â¯Â¨Ã  Â­Â Â§Â¢Â Â­Â¨Â¥
+			strcpy(newrec->recid, itok.name); //áª®¯¨à ­ §¢ ­¨¥
 			newrec->newid = (char*)tteg;
 			newrec->left = NULL;
 			newrec->right = NULL;
@@ -8727,7 +8727,7 @@ void InitStruct2(unsigned int flag, structteg* tteg)	//Â¨Â­Â¨Ã¦Â¨Â Â«Â¨Â§Â¨Ã Â®Â
 
 				if (tok != tk_closeblock)
 				{
-					numel = doconstlongmath();    //Ã§Â¨Ã¡Â«Â® Ã­Â«Â¥Â¬Â¥Â­Ã¢Â®Â¢
+					numel = doconstlongmath();    //ç¨á«® í«¥¬¥­â®¢
 				}
 				else
 				{
@@ -8753,7 +8753,7 @@ void InitStruct2(unsigned int flag, structteg* tteg)	//Â¨Â­Â¨Ã¦Â¨Â Â«Â¨Â§Â¨Ã Â®Â
 
 				if (alignword && (!dynamic_flag))
 				{
-					alignersize += AlignCD(DS, 2);    //Â¢Ã«Ã Â®Â¢Â­Ã¯Ã¢Ã¬
+					alignersize += AlignCD(DS, 2);    //¢ëà®¢­ïâì
 				}
 
 				//					NotPostUnion();
@@ -8771,7 +8771,7 @@ void InitStruct2(unsigned int flag, structteg* tteg)	//Â¨Â­Â¨Ã¦Â¨Â Â«Â¨Â§Â¨Ã Â®Â
 					dynamic = USED_DIN_VAR;
 				}
 
-				newrec->recnumber = (dynamic == 0 ? outptrdata : 0);	//Â Â¤Ã Â¥Ã¡ Â­Â Ã§Â Â«Â  Ã¡Ã¢Ã Ã£ÂªÃ¢Ã£Ã Ã«
+				newrec->recnumber = (dynamic == 0 ? outptrdata : 0);	// ¤à¥á ­ ç «  áâàãªâãàë
 				newrec->recpost = dynamic;
 
 				if (notpost == TRUE && tok != tk_assign)
@@ -8835,7 +8835,7 @@ void InitStruct2(unsigned int flag, structteg* tteg)	//Â¨Â­Â¨Ã¦Â¨Â Â«Â¨Â§Â¨Ã Â®Â
 					dynamic = TRUE;
 				}
 
-				switch (tok) 	//Â­Â¥Â¨Â­Â¨Ã¦Â¨Â Â«Â¨Â§Â¨Ã Â®Â¢Â Â­Â­Ã«Â¥
+				switch (tok) 	//­¥¨­¨æ¨ «¨§¨à®¢ ­­ë¥
 				{
 				default:
 					expected(';');
@@ -8860,7 +8860,7 @@ void InitStruct2(unsigned int flag, structteg* tteg)	//Â¨Â­Â¨Ã¦Â¨Â Â«Â¨Â§Â¨Ã Â®Â
 
 					if ((flag & f_extern) == 0 && dynamic == 0)
 					{
-						if (alignword) 	//Â¢Ã«Ã Â®Â¢Â­Ã¯Ã¢Ã¬ Â­Â  Ã§Â¥Ã¢Â­Ã«Â© Â Â¤Ã Â¥Ã¡
+						if (alignword) 	//¢ëà®¢­ïâì ­  ç¥â­ë©  ¤à¥á
 						{
 							if (postsize % 2 == 1)
 							{
@@ -8879,7 +8879,7 @@ void InitStruct2(unsigned int flag, structteg* tteg)	//Â¨Â­Â¨Ã¦Â¨Â Â«Â¨Â§Â¨Ã Â®Â
 
 					if ((flag & f_extern) == 0 && dynamic == 0)
 						/*-----------------10.09.02 23:21-------------------
-						 Ã­Ã¢Â®Ã¢ Â¢Ã«Â§Â®Â¢ Â¤Â®Â«Â¦Â¥Â­ Â¡Ã«Ã¢Ã¬ Â¯Â®Ã¡Â«Â¥ FindOff
+						 íâ®â ¢ë§®¢ ¤®«¦¥­ ¡ëâì ¯®á«¥ FindOff
 							--------------------------------------------------*/
 					{
 						AddPostData(loop);
@@ -8931,7 +8931,7 @@ void InitStruct2(unsigned int flag, structteg* tteg)	//Â¨Â­Â¨Ã¦Â¨Â Â«Â¨Â§Â¨Ã Â®Â
 	dopoststrings();
 }
 
-void InitStruct()	//Â¨Â­Â¨Ã¦Â¨Â Â«Â¨Â§Â¨Ã Â®Â¢Â Ã¢Ã¬ Â£Â«Â®Â¡Â Â«Ã¬Â­Ã£Ã® Ã¡Ã¢Ã Ã£ÂªÃ¢Ã£Ã Ã£
+void InitStruct()	//¨­¨æ¨ «¨§¨à®¢ âì £«®¡ «ì­ãî áâàãªâãàã
 {
 	struct structteg* tteg;
 	unsigned int flag;
@@ -8968,7 +8968,7 @@ void InitStruct()	//Â¨Â­Â¨Ã¦Â¨Â Â«Â¨Â§Â¨Ã Â®Â¢Â Ã¢Ã¬ Â£Â«Â®Â¡Â Â«Ã¬Â­Ã£Ã® Ã¡Ã¢Ã 
 	{
 		if (tok == tk_openbrace || tok2 == tk_openbrace || tok == tk_colon || tok2 == tk_colon)
 		{
-			tteg = CreatTeg(TRUE);    //Â­Â Â©Ã¢Â¨ Â¨Â«Â¨ Ã¡Â®Â§Â¤Â Ã¢Ã¬ Ã¢Â¥Â£
+			tteg = CreatTeg(TRUE);    //­ ©â¨ ¨«¨ á®§¤ âì â¥£
 		}
 		else
 		{
@@ -8994,12 +8994,12 @@ void InitStruct()	//Â¨Â­Â¨Ã¦Â¨Â Â«Â¨Â§Â¨Ã Â®Â¢Â Ã¢Ã¬ Â£Â«Â®Â¡Â Â«Ã¬Â­Ã£Ã® Ã¡Ã¢Ã 
 	InitStruct2(flag, tteg);
 }
 
-unsigned long LocalStruct2(int flag, int* localline, int binptr, char bcha, structteg* tteg)	//Â¨Â­Â¨Ã¦Â¨Â Â«Â¨Â§Â¨Ã Â®Â¢Â Ã¢Ã¬ Â«Â®ÂªÂ Â«Ã¬Â­Ã£Ã® Ã¡Ã¢Ã Ã£ÂªÃ¢Ã£Ã Ã£
+unsigned long LocalStruct2(int flag, int* localline, int binptr, char bcha, structteg* tteg)	//¨­¨æ¨ «¨§¨à®¢ âì «®ª «ì­ãî áâàãªâãàã
 {
 	int numel, first = FALSE;
 	struct localrec* newrec;
 	unsigned long size = 0;
-	skipfind = TRUE;	//Â§Â Â¯Ã Â¥Ã¢Â¨Ã¢Ã¬ Â¨Ã¡ÂªÂ Ã¢Ã¬ Â¢ Â£Â«Â®Â¡Â Â«Ã¬Â­Â®Â¬ Â¤Â¥Ã Â¥Â¢Â¥
+	skipfind = TRUE;	//§ ¯à¥â¨âì ¨áª âì ¢ £«®¡ «ì­®¬ ¤¥à¥¢¥
 
 	do
 	{
@@ -9016,7 +9016,7 @@ unsigned long LocalStruct2(int flag, int* localline, int binptr, char bcha, stru
 		{
 			idalreadydefined();
 		}
-		else 	//Â¨Â­Â¨Ã¦Â¨Â Â«Â¨Â§Â¨Ã Â®Â¢Â Ã¢Ã¬ Ã¡Ã¢Ã Ã£ÂªÃ¢Ã£Ã Ã£
+		else 	//¨­¨æ¨ «¨§¨à®¢ âì áâàãªâãàã
 		{
 			numel = 1;
 			newrec = addlocalvar((char*)string, tk_structvar, localsize);
@@ -9029,7 +9029,7 @@ unsigned long LocalStruct2(int flag, int* localline, int binptr, char bcha, stru
 			{
 				skipfind = FALSE;
 				nexttok();
-				numel = doconstlongmath();	//Ã§Â¨Ã¡Â«Â® Ã­Â«Â¥Â¬Â¥Â­Ã¢Â®Â¢
+				numel = doconstlongmath();	//ç¨á«® í«¥¬¥­â®¢
 				skipfind = TRUE;
 				expecting(tk_closeblock);//]
 			}
@@ -9058,7 +9058,7 @@ unsigned long LocalStruct2(int flag, int* localline, int binptr, char bcha, stru
 				{
 					newrec->rec.recpost = TRUE;
 
-					if (alignword) 	//Â¢Ã«Ã Â®Â¢Â­Ã¯Ã¢Ã¬ Â­Â  Ã§Â¥Ã¢Â­Ã«Â© Â Â¤Ã Â¥Ã¡
+					if (alignword) 	//¢ëà®¢­ïâì ­  ç¥â­ë©  ¤à¥á
 					{
 						if (postsize % 2 == 1)
 						{
@@ -9095,14 +9095,14 @@ unsigned long LocalStruct2(int flag, int* localline, int binptr, char bcha, stru
 	}
 	while (tok == tk_camma);
 
-	skipfind = FALSE;	//Â§Â Â¯Ã Â¥Ã¢Â¨Ã¢Ã¬ Â¨Ã¡ÂªÂ Ã¢Ã¬ Â¢ Â£Â«Â®Â¡Â Â«Ã¬Â­Â®Â¬ Â¤Â¥Ã Â¥Â¢Â¥
+	skipfind = FALSE;	//§ ¯à¥â¨âì ¨áª âì ¢ £«®¡ «ì­®¬ ¤¥à¥¢¥
 	//	localsize+=size;
 	itok.name[0] = 0;
 	seminext();
 	return size;
 }
 
-unsigned long LocalStruct(int flag, int* localline)	//Â¨Â­Â¨Ã¦Â¨Â Â«Â¨Â§Â¨Ã Â®Â¢Â Ã¢Ã¬ Â«Â®ÂªÂ Â«Ã¬Â­Ã£Ã® Ã¡Ã¢Ã Ã£ÂªÃ¢Ã£Ã Ã£
+unsigned long LocalStruct(int flag, int* localline)	//¨­¨æ¨ «¨§¨à®¢ âì «®ª «ì­ãî áâàãªâãàã
 {
 	struct structteg* tteg;
 	int binptr;
@@ -9110,7 +9110,7 @@ unsigned long LocalStruct(int flag, int* localline)	//Â¨Â­Â¨Ã¦Â¨Â Â«Â¨Â§Â¨Ã Â®Â¢
 	structteg* osearchteg;
 	osearchteg = searchteg;
 	searchteg = NULL;
-	skipfind = TRUE;	//Â§Â Â¯Ã Â¥Ã¢Â¨Ã¢Ã¬ Â¨Ã¡ÂªÂ Ã¢Ã¬ Â¢ Â£Â«Â®Â¡Â Â«Ã¬Â­Â®Â¬ Â¤Â¥Ã Â¥Â¢Â¥
+	skipfind = TRUE;	//§ ¯à¥â¨âì ¨áª âì ¢ £«®¡ «ì­®¬ ¤¥à¥¢¥
 
 	if (tok == tk_struct)
 	{
@@ -9126,7 +9126,7 @@ unsigned long LocalStruct(int flag, int* localline)	//Â¨Â­Â¨Ã¦Â¨Â Â«Â¨Â§Â¨Ã Â®Â¢
 
 		if (tok == tk_openbrace || tok2 == tk_openbrace)
 		{
-			tteg = CreatTeg(FALSE);	//Â­Â Â©Ã¢Â¨ Â¨Â«Â¨ Ã¡Â®Â§Â¤Â Ã¢Ã¬ Ã¢Â¥Â£
+			tteg = CreatTeg(FALSE);	//­ ©â¨ ¨«¨ á®§¤ âì â¥£
 		}
 		else
 		{
@@ -9211,7 +9211,7 @@ void dostruct()
 			else
 			{
 				itok.segm = DS;
-				itok.rm = (am32 == FALSE ? rm_d16 : rm_d32);	//Ã£Ã¡Ã¢Â Â­Â®Â¢ÂªÂ¨ Â¯Â® Ã£Â¬Â®Â«Ã§Â Â­Â¨Ã®
+				itok.rm = (am32 == FALSE ? rm_d16 : rm_d32);	//ãáâ ­®¢ª¨ ¯® ã¬®«ç ­¨î
 				itok.post = ptrs->recpost;
 			}
 
@@ -9250,8 +9250,8 @@ void dostruct()
 	}
 
 	adr = itok.number;
-	numel = itok.rm;	//Ã§Â¨Ã¡Â«Â® Ã¡Ã¢Ã Ã£ÂªÃ¢Ã£Ã 
-	usenumstr = itok.post;	//Â¡Ã«Â«Â® Ã£ÂªÂ Â§Â Â­Â¨Â¥ Â­Â®Â¬Â¥Ã Â  Ã¡Ã¢Ã Ã£ÂªÃ¢Ã£Ã Ã«
+	numel = itok.rm;	//ç¨á«® áâàãªâãà
+	usenumstr = itok.post;	//¡ë«® ãª § ­¨¥ ­®¬¥à  áâàãªâãàë
 
 	if (itok.type == tp_classvar)
 	{
@@ -9282,7 +9282,7 @@ void dostruct()
 	if (tok == tk_assign)
 	{
 		getoperand();
-		int starts = 0;	//Ã¡Â¬Â¥Ã©Â¥Â­Â¨Â¥ Â§Â Â¯Â®Â«Â­Â¥Â­Â¨Ã¯ Â¢ Ã¡Ã¢Ã Ã£ÂªÃ¢Ã£Ã Â¥
+		int starts = 0;	//á¬¥é¥­¨¥ § ¯®«­¥­¨ï ¢ áâàãªâãà¥
 
 		if (tok == tk_int || tok == tk_word)
 		{
@@ -9410,7 +9410,7 @@ convr:
 
 			if (usenumstr != FALSE)
 			{
-				//					num/=ptrs->recrm;	//Ã£ÂªÂ Â§Â Â­ Â­Â®Â¬Â¥Ã  Ã¡Ã¢Ã Ã£ÂªÃ¢Ã£Ã Ã« - Â§Â­Â Ã§Â¨Ã¢ Â­Â¥ Â¢Ã¡Â¥
+				//					num/=ptrs->recrm;	//ãª § ­ ­®¬¥à áâàãªâãàë - §­ ç¨â ­¥ ¢á¥
 				num = tteg->size;
 
 				if (strinf.bufstr == NULL)
@@ -9451,7 +9451,7 @@ convr:
 
 			if (usenumstr != FALSE)
 			{
-				//					num/=ptrs->recrm;	//Ã£ÂªÂ Â§Â Â­ Â­Â®Â¬Â¥Ã  Ã¡Ã¢Ã Ã£ÂªÃ¢Ã£Ã Ã« - Â§Â­Â Ã§Â¨Ã¢ Â­Â¥ Â¢Ã¡Â¥
+				//					num/=ptrs->recrm;	//ãª § ­ ­®¬¥à áâàãªâãàë - §­ ç¨â ­¥ ¢á¥
 				num = tteg->size;
 
 				if (strinf.bufstr == NULL)
@@ -9588,7 +9588,7 @@ fillstr:
 
 				itok.post = poststr;
 				itok.segm = DS;
-				itok.rm = (am32 == FALSE ? rm_d16 : rm_d32);	//Ã£Ã¡Ã¢Â Â­Â®Â¢ÂªÂ¨ Â¯Â® Ã£Â¬Â®Â«Ã§Â Â­Â¨Ã®
+				itok.rm = (am32 == FALSE ? rm_d16 : rm_d32);	//ãáâ ­®¢ª¨ ¯® ã¬®«ç ­¨î
 				itok.rec = NULL; //ptrs;
 
 				if (rstr.bufstr == NULL)
@@ -9738,8 +9738,8 @@ fillstr:
 			//	adr=itok.number;
 
 			localstr2 = FALSE;
-			numel2 = itok.rm;	//Ã§Â¨Ã¡Â«Â® Ã¡Ã¢Ã Ã£ÂªÃ¢Ã£Ã 
-			usenumstr2 = itok.post;	//Â¡Ã«Â«Â® Ã£ÂªÂ Â§Â Â­Â¨Â¥ Â­Â®Â¬Â¥Ã Â  Ã¡Ã¢Ã Ã£ÂªÃ¢Ã£Ã Ã«
+			numel2 = itok.rm;	//ç¨á«® áâàãªâãà
+			usenumstr2 = itok.post;	//¡ë«® ãª § ­¨¥ ­®¬¥à  áâàãªâãàë
 
 			if (itok.type == tp_classvar)
 			{
@@ -9766,7 +9766,7 @@ fillstr:
 
 			//				ptrs2=itok.rec;
 			//				tteg2=(structteg *)ptrs2->newid;
-			//				numel2=itok.rm;	//Ã§Â¨Ã¡Â«Â® Ã¡Ã¢Ã Ã£ÂªÃ¢Ã£Ã 
+			//				numel2=itok.rm;	//ç¨á«® áâàãªâãà
 			//				num2=tteg2->size;
 			if (usenumstr2 != FALSE)
 			{
@@ -9778,7 +9778,7 @@ fillstr:
 				}
 			}
 
-			//				if(itok.post==FALSE)num2*=ptrs2->recrm;	//Â­Â¥ Ã£ÂªÂ Â§Â Â­ Â­Â®Â¬Â¥Ã  Ã¡Ã¢Ã Ã£ÂªÃ¢Ã£Ã Ã« - Â§Â­Â Ã§Â¨Ã¢ Â¢Ã¡Â¥
+			//				if(itok.post==FALSE)num2*=ptrs2->recrm;	//­¥ ãª § ­ ­®¬¥à áâàãªâãàë - §­ ç¨â ¢á¥
 			//				else if(strinf.bufstr==NULL)starts=num2*numel2;
 			if (strinf.bufstr == NULL)
 			{
@@ -9834,7 +9834,7 @@ fillstr:
 			else
 			{
 				itok.post = poststr2;
-				itok.rm = (am32 == FALSE ? rm_d16 : rm_d32);	//22.11.04 09:22//Ã£Ã¡Ã¢Â Â­Â®Â¢ÂªÂ¨ Â¯Â® Ã£Â¬Â®Â«Ã§Â Â­Â¨Ã®
+				itok.rm = (am32 == FALSE ? rm_d16 : rm_d32);	//22.11.04 09:22//ãáâ ­®¢ª¨ ¯® ã¬®«ç ­¨î
 
 				if (strinf.bufstr == NULL)
 				{
@@ -9870,7 +9870,7 @@ fillstr:
 
 			if (usenumstr == FALSE)
 			{
-				num *= tteg->size;    //ptrs->recrm;	//Â­Â¥ Ã£ÂªÂ Â§Â Â­ Â­Â®Â¬Â¥Ã  Ã¡Ã¢Ã Ã£ÂªÃ¢Ã£Ã Ã« - Â§Â­Â Ã§Â¨Ã¢ Â¢Ã¡Â¥
+				num *= tteg->size;    //ptrs->recrm;	//­¥ ãª § ­ ­®¬¥à áâàãªâãàë - §­ ç¨â ¢á¥
 			}
 			else if (rstr.bufstr == NULL)
 			{
@@ -9915,7 +9915,7 @@ fillstr:
 			{
 				itok.post = poststr; //ptrs->recpost;
 				itok.segm = DS;
-				itok.rm = (am32 == FALSE ? rm_d16 : rm_d32);	//Ã£Ã¡Ã¢Â Â­Â®Â¢ÂªÂ¨ Â¯Â® Ã£Â¬Â®Â«Ã§Â Â­Â¨Ã®
+				itok.rm = (am32 == FALSE ? rm_d16 : rm_d32);	//ãáâ ­®¢ª¨ ¯® ã¬®«ç ­¨î
 
 				if (rstr.bufstr == NULL)
 				{
@@ -10081,7 +10081,7 @@ int SaveStruct(int size, idrec* newrec)
 
 	if ((startStartup + size) < endStartup)
 	{
-		if (alignword) 	//Â¢Ã«Ã Â®Â¢Â­Ã¯Ã¢Ã¬ Â­Â  Ã§Â¥Ã¢Â­Ã«Â© Â Â¤Ã Â¥Ã¡
+		if (alignword) 	//¢ëà®¢­ïâì ­  ç¥â­ë©  ¤à¥á
 		{
 			if (startStartup % 2 == 1)
 			{
@@ -10092,7 +10092,7 @@ int SaveStruct(int size, idrec* newrec)
 		if ((startStartup + size + i) <= endStartup)
 		{
 			startStartup += i;
-			newrec->recnumber = startStartup;	//Â Â¤Ã Â¥Ã¡ Â­Â Ã§Â Â«Â  Ã¡Ã¢Ã Ã£ÂªÃ¢Ã£Ã Ã«
+			newrec->recnumber = startStartup;	// ¤à¥á ­ ç «  áâàãªâãàë
 			newrec->recpost = FALSE;
 			startStartup += size;
 			return TRUE;
@@ -10116,9 +10116,9 @@ void FastTok(int mode, int* tok4, ITOK* itok4)
 	int next = 1;
 	*tok4 = tokens;
 	itok4->type = tp_ucnovn;
-	whitespace(); //Â¯Ã Â®Â¯Ã£Ã¡Âª Â­Â¥Â§Â­Â Ã§Â Ã©Â¨Ã¥ Ã¡Â¨Â¬Â¢Â®Â«Â®Â¢
+	whitespace(); //¯à®¯ãáª ­¥§­ ç é¨å á¨¬¢®«®¢
 
-	if (isalpha(cha) || (cha == '_') || cha >= 0x80) 	//Â¨Â¤Â¥Â­Ã¢Â¨Ã¤Â¨ÂªÂ Ã¢Â®Ã 
+	if (isalpha(cha) || (cha == '_') || cha >= 0x80) 	//¨¤¥­â¨ä¨ª â®à
 	{
 		if (mode == 1)
 		{
@@ -10141,14 +10141,14 @@ void FastTok(int mode, int* tok4, ITOK* itok4)
 
 		while (CheckChar2() == TRUE)
 		{
-			nextchar();    //Â¤Â®Ã§Â¨Ã¢Â Ã¢Ã¬ Ã¡Â«Â®Â¢Â®
+			nextchar();    //¤®ç¨â âì á«®¢®
 		}
 
 		*tok4 = tk_id;
 		return;
 	}
 
-	if (isdigit(cha)) //Ã§Â¨Ã¡Â«Â 
+	if (isdigit(cha)) //ç¨á« 
 	{
 		if (mode == 1)
 		{
@@ -10170,7 +10170,7 @@ void FastTok(int mode, int* tok4, ITOK* itok4)
 	else switch (cha)
 		{
 		case '\"':
-			nextchar();	//Ã¡Ã¢Ã Â®ÂªÂ®Â¢Â Ã¯ ÂªÂ®Â­Ã¡Ã¢Â Â­Ã¢Â 
+			nextchar();	//áâà®ª®¢ ï ª®­áâ ­â 
 
 			while (cha != '\"' && !endoffile)
 			{
@@ -10181,7 +10181,7 @@ void FastTok(int mode, int* tok4, ITOK* itok4)
 			*tok4 = tk_string;
 			break;
 
-		case '\'': //Ã¡Â¨Â¬Â¢Â®Â«Ã¬Â­Â Ã¯ ÂªÂ®Â­Ã¡Ã¢Â Â­Ã¢Â  Â¬Â®Â¦Â¥Ã¢ Â¨Â¬Â¥Ã¢Ã¬ Â¡Â®Â«Â¥Â¥ 1 Ã¡Â¨Â¬Â¢Â®Â«Â 
+		case '\'': //á¨¬¢®«ì­ ï ª®­áâ ­â  ¬®¦¥â ¨¬¥âì ¡®«¥¥ 1 á¨¬¢®« 
 			nextchar();
 
 			while (cha != '\'' && !endoffile) // special character
@@ -10198,7 +10198,7 @@ void FastTok(int mode, int* tok4, ITOK* itok4)
 			switch (cha)
 			{
 			case '*':
-				nextchar(); //Ã¡Â®Â¬Â¥Â­Ã¢Â Ã Â¨Â©
+				nextchar(); //á®¬¥­â à¨©
 				useme = 1;
 
 				if (mode == 2)
@@ -10266,7 +10266,7 @@ void FastTok(int mode, int* tok4, ITOK* itok4)
 				{
 					nextchar();
 				}
-				while (!endoffile && cha != 13);	//Ã¡Ã¢Ã Â®ÂªÂ  ÂªÂ®Â¬Â¥Â­Ã¢Â Ã Â¨Ã¯
+				while (!endoffile && cha != 13);	//áâà®ª  ª®¬¥­â à¨ï
 
 				if (endoffile)
 				{
@@ -10388,7 +10388,7 @@ void FastTok(int mode, int* tok4, ITOK* itok4)
 			}
 			else
 			{
-				*tok4 = tk_assign;						 //Â¯Ã Â¨Ã¡Â¢Â®Â¨Ã¢Ã¬
+				*tok4 = tk_assign;						 //¯à¨á¢®¨âì
 				next = 0;
 			}
 
@@ -10404,11 +10404,11 @@ void FastTok(int mode, int* tok4, ITOK* itok4)
 
 				if (cha == '=')
 				{
-					*tok4 = tk_rrequals;    //Ã¡Â¤Â¢Â¨Â£ Â¢Â¯Ã Â Â¢Â® Ã¡ Â¯Ã Â¨Ã¡Â¢Â®Â¥Â­Â¨Â¥Â¬
+					*tok4 = tk_rrequals;    //á¤¢¨£ ¢¯à ¢® á ¯à¨á¢®¥­¨¥¬
 				}
 				else
 				{
-					*tok4 = tk_rr;							//Ã¡Â¤Â¢Â¨Â£ Â¢Â¯Ã Â Â¢Â®
+					*tok4 = tk_rr;							//á¤¢¨£ ¢¯à ¢®
 					next = 0;
 					itok4->type = tp_opperand;
 				}
@@ -10417,18 +10417,18 @@ void FastTok(int mode, int* tok4, ITOK* itok4)
 
 			case '<':
 				*tok4 = tk_swap;
-				break; 			 //Â®Â¡Â¬Â¥Â­
+				break; 			 //®¡¬¥­
 
 			case '=':
 				*tok4 = tk_greaterequal;
 				itok4->type = tp_compare;
-				break; //Â¡Â®Â«Ã¬Ã¨Â¥ Â¨Â«Â¨ Ã Â Â¢Â­Â®
+				break; //¡®«ìè¥ ¨«¨ à ¢­®
 
 			default:
 				*tok4 = tk_greater;
 				next = 0;
 				itok4->type = tp_compare;
-				break; //Â¡Â®Â«Ã¬Ã¨Â¥
+				break; //¡®«ìè¥
 			}
 
 			break;
@@ -10443,11 +10443,11 @@ void FastTok(int mode, int* tok4, ITOK* itok4)
 
 				if (cha == '=')
 				{
-					*tok4 = tk_llequals;    //Ã¡Â¤Â¢Â¨Â£ Â¢Â«Â¥Â¢Â® Ã¡ Â¯Ã Â¨Ã¡Â¢Â®Â¥Â­Â¨Â¥Â¬
+					*tok4 = tk_llequals;    //á¤¢¨£ ¢«¥¢® á ¯à¨á¢®¥­¨¥¬
 				}
 				else
 				{
-					*tok4 = tk_ll;								 //Ã¡Â¤Â¢Â¨Â£ Â¢Â«Â¥Â¢Â®
+					*tok4 = tk_ll;								 //á¤¢¨£ ¢«¥¢®
 					next = 0;
 					itok4->type = tp_opperand;
 				}
@@ -10462,13 +10462,13 @@ void FastTok(int mode, int* tok4, ITOK* itok4)
 			case '=':
 				*tok4 = tk_lessequal;
 				itok4->type = tp_compare;
-				break; //Â¬Â¥Â­Ã¬Ã¨Â¥ Â¨Â«Â¨ Ã Â Â¢Â­Â®
+				break; //¬¥­ìè¥ ¨«¨ à ¢­®
 
 			default:
 				*tok4 = tk_less;
 				next = 0;
 				itok4->type = tp_compare;
-				break;//Â¬Â¥Â­Ã¬Ã¨Â¥
+				break;//¬¥­ìè¥
 			}
 
 			break;
@@ -10481,7 +10481,7 @@ void FastTok(int mode, int* tok4, ITOK* itok4)
 }
 
 void FindDirectiv()
-//Ã£Ã¡ÂªÂ®Ã Â¥Â­Â­Ã«Â© Â¯Â®Â¨Ã¡Âª Â¤Â¨Ã Â¥ÂªÃ¢Â¨Â¢Ã«
+//ãáª®à¥­­ë© ¯®¨áª ¤¨à¥ªâ¨¢ë
 {
 	inptr = inptr2;
 	cha = cha2;
@@ -10771,7 +10771,7 @@ void tag_massiv(int* tok4, ITOK* itok4, unsigned char* string4)
 			itok4->sib = rm | rm_mod10;
 			itok4->flag &= ~f_reloc;
 		}
-		else if (*tok4 != tk_proc && *tok4 != tk_declare/*&&(itok4->flag&f_static)==0 Ã­Ã¤Ã¤Â¥ÂªÃ¢ Â¤Â®Â¡Â Â¢Â«Â¥Â­Â¨Ã¯ Ã Â¥Â£Ã Â¨Ã¡Ã¢Ã Â */)
+		else if (*tok4 != tk_proc && *tok4 != tk_declare/*&&(itok4->flag&f_static)==0 íää¥ªâ ¤®¡ ¢«¥­¨ï à¥£à¨áâà */)
 		{
 			itok4->rm = rm_mod10 | rm;
 			itok4->flag &= ~f_reloc;
@@ -11012,7 +11012,6 @@ void GetTypeVar(int* tok4)
 	{
 		*tok4 = i;
 	}
-
 	else if (*tok4 == tk_short)
 	{
 		*tok4 = tk_int;
@@ -11082,5 +11081,6 @@ void RunBuffer(unsigned char* buf)
 	inptr2 = inptr;
 	nexttok();
 }
+
 
 /* end of TOKA.C */
