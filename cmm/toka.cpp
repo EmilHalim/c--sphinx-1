@@ -11012,6 +11012,7 @@ void GetTypeVar(int* tok4)
 	{
 		*tok4 = i;
 	}
+
 	else if (*tok4 == tk_short)
 	{
 		*tok4 = tk_int;
@@ -11057,6 +11058,29 @@ int CheckDef()
 	}
 
 	return TRUE;
+}
+
+void RunBuffer(unsigned char* buf)
+{
+	unsigned len = strlen((char*)buf);
+	if (len >= inptr) 
+	{
+		char* newinp = (char *)MALLOC(len + endinptr);
+		endinptr += len;
+		endinput = newinp + endinptr;
+		inptr += len;
+		strcpy(newinp + len - 1, (char *)input);
+		free(input);
+		input = (unsigned char *)newinp;
+	}
+	while (len)
+	{
+		input[--inptr] = buf[--len];
+	}
+	nextchar();
+	cha2 = cha;
+	inptr2 = inptr;
+	nexttok();
 }
 
 /* end of TOKA.C */
